@@ -5,6 +5,8 @@ import { AsciiRenderer, OrbitControls, PerspectiveCamera, useHelper } from "@rea
 import "./App.css";
 import { PointLightHelper, SpotLightHelper } from "three";
 import { MatrixMaterial } from "./material/MatrixMaterial";
+import * as THREE from "three";
+import { FadeShader } from "./material/testShader";
 extend({ MatrixMaterial });
 function App() {
   return (
@@ -22,32 +24,42 @@ function Torusknot(props) {
   const ref = useRef();
   const viewport = useThree((state) => state.viewport);
   useFrame((state, delta) => {
-    ref.current.rotation.x = ref.current.rotation.y += delta / 2;
-    console.log(state);
-    ref.current.material.uniforms.time.value = state.clock.elapsedTime;
+    // ref.current.rotation.x = ref.current.rotation.y += delta / 2;
+    // console.log(state);
+    ref.current.material.uniforms.u_time.value = state.clock.elapsedTime;
+    ref.current.material.uniforms.u_resolution.value = new THREE.Vector2(viewport.width, viewport.height);
+
   });
 
   return (
     <mesh scale={Math.min(viewport.width, viewport.height) / 5} {...props} ref={ref}>
       <boxGeometry args={[2, 2, 2, 100, 100, 100]} />
-      <matrixMaterial color="#ffff12" flatShading />
+      {/* <planeGeometry args={[2, 2, 100, 100]} /> */}
+      <shaderMaterial
+        attach="material"
+        args={[FadeShader]}
+        uniforms-u_resolution-value={new THREE.Vector2(viewport.width, viewport.height)}
+      />
     </mesh>
   );
 }
 function PlaneIkea(props) {
   const ref = useRef();
   const viewport = useThree((state) => state.viewport);
+  
 
   useFrame((state, delta) => {
-    ref.current.rotation.x = ref.current.rotation.y += delta / 2;
+    // ref.current.rotation.x = ref.current.rotation.y += delta / 2;
     // console.log(ref.current.material.uniforms.time.value);
-    ref.current.material.uniforms.time.value = state.clock.elapsedTime * 1;
+    ref.current.material.uniforms.u_time.value = state.clock.elapsedTime * 1;
+    // ref.current.material.uniforms.u_resolution.value = new THREE.Vector2(viewport.width, viewport.height);
   });
 
   return (
     <mesh scale={Math.min(viewport.width, viewport.height) / 5} {...props} ref={ref}>
       <planeGeometry args={[2, 2, 100, 100]} />
-      <matrixMaterial />
+      <matrixMaterial side={THREE.DoubleSide} />
+      
     </mesh>
   );
 }
@@ -65,9 +77,9 @@ function Scene() {
 
       {/* <pointLight intensity={12} position={[-5, 5, -5]} ref={pointLightRef} /> */}
       {/* <pointLight intensity={12} position={[10, 10, 10]} /> */}
-      <ambientLight intensity={1} />
-      {/* <Torusknot /> */}
-      <PlaneIkea />
+      {/* <ambientLight intensity={1} /> */}
+      <Torusknot />
+      {/* <PlaneIkea /> */}
 
       {/* <AsciiRenderer fgColor="black" bgColor="transparent" characters=".:+=#%@" /> */}
     </>
