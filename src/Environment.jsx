@@ -1,37 +1,70 @@
 /* eslint-disable react/no-unknown-property */
 import { useRef } from "react";
-import { OrbitControls, PerspectiveCamera, useHelper } from "@react-three/drei";
+import { OrbitControls, useHelper } from "@react-three/drei";
 import "./App.css";
 import { PointLightHelper } from "three";
+import { editable as e, SheetProvider, PerspectiveCamera, useCurrentSheet } from "@theatre/r3f";
+import { useFrame } from "@react-three/fiber";
+import { easeOutQuad } from "./utils";
+import * as THREE from "three";
+import { firstStateDur, secondStateDur } from "./constants";
+
 export function Environment() {
   const spotLightRef = useRef();
   const pointLightRef = useRef();
   const pointLightRef2 = useRef();
-  useHelper(pointLightRef, PointLightHelper);
-  useHelper(pointLightRef2, PointLightHelper);
+  // useHelper(pointLightRef, PointLightHelper);
+  // useHelper(pointLightRef2, PointLightHelper);
   // useHelper(spotLightRef, SpotLightHelper);
   const camera = useRef();
+
+  useFrame((state, delta) => {
+    const timer = state.clock.elapsedTime * 1000;
+    const progressFade = easeOutQuad(Math.min(firstStateDur, timer) / firstStateDur);
+    const progressSpin = easeOutQuad(Math.min(secondStateDur, timer) / secondStateDur);
+
+    // pointLightRef.current.intensity = progressFade * progressFade * 2000;
+    console.log(progressFade * progressFade);
+  });
+
   return (
     <>
-      {/* <PerspectiveCamera ref={camera}  /> */}
-      <OrbitControls
-      //   camera={camera.current}
+      <PerspectiveCamera
+        theatreKey="camera"
+        ref={camera}
+        fov={20}
+        near={1}
+        far={10000}
+        makeDefault
+        position={[0, 0, 400]}
+        lookAt={[0, 0, 0]}
+        zoom={3}
       />
-      <color attach="background" args={["#000"]} />
-      {/* <spotLight position={[20, 30, 50]} angle={0.55} intensity={3000} distance={800} penumbra={1} ref={spotLightRef} /> */}
-
-      <pointLight color={"#ffffff"} intensity={1200} position={[40, 40, 40]} distance={800} ref={pointLightRef} />
+      <OrbitControls camera={camera.current} makeDefault />
+      {/* <color attach="background" args={["#010327"]} /> */}
 
       <pointLight
-        color={"#00ffff"}
-        intensity={4002}
-        position={[-50, -50, 2]}
+        // theatreKey="pointLight1"
+        color={"#fff"}
+        intensity={2000}
+        position={[400, 400, 400]}
         distance={8000}
-        decay={1}
+        ref={pointLightRef}
+        // castShadow
+      />
+
+      {/* <e.pointLight
+        theatreKey="pointLight2"
+        color={"#00ffff"}
+        intensity={8002}
+        position={[-500, -500, 20]}
+        distance={800}
+        decay={1.9}
         castShadow
         ref={pointLightRef2}
-      />
-      {/* <ambientLight intensity={2} /> */}
+      /> */}
+
+      <ambientLight intensity={0.2} />
     </>
   );
 }
