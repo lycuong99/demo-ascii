@@ -139,7 +139,7 @@ function Scene() {
   console.log(nodes);
   useEffect(() => {
     const mousemove = (e) => {
-      colorVar.current += 0.0000001;
+      colorVar.current += 0.000001;
       pointLightRef2.current.color = pointLightRef2.current.color.offsetHSL(Math.sin(colorVar.current), 1.0, 0.0);
     };
     window.addEventListener("mousemove", mousemove);  
@@ -155,16 +155,15 @@ function Scene() {
    
       <mesh onPointerMove={handlePointerMove}>
         <planeGeometry args={[1000, 1000]} />
-        <meshBasicMaterial color={"#ffff00"} visible={false} opacity={0.1}/>
+        <meshBasicMaterial color={"#ffff00"} visible={false} />
       </mesh>
       {/* <axesHelper scale={100} /> */}
       <mesh
-        scale={0.5}
+        scale={2}
         geometry={nodes.logo.geometry}
         position={[0, 0, 0]}
         ref={modelRef}
         castShadow
-        
       >
         <meshPhongMaterial  flatShading />
       </mesh>
@@ -173,10 +172,10 @@ function Scene() {
       <pointLight
         // theatreKey="pointLight2"
         color={"#00ffff"}
-        intensity={30000}
-        position={[-500, -500, 35]}
+        intensity={3000}
+        position={[-500, -500, 80]}
         distance={800}
-        decay={3.8}
+        decay={1.8}
         castShadow
         ref={pointLightRef2}
       />
@@ -190,7 +189,7 @@ function Scene() {
         {/* <DepthOfField focusDistance={0} focalLength={0.02} bokehScale={2} height={480} /> */}
         {/* <FadeShader  /> */}
         <AsciiEffectCustom />
-        <Noise opacity={0.1} />
+        {/* <Noise opacity={0.1} /> */}
       </EffectComposer>
 
       

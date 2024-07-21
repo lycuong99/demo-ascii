@@ -8,6 +8,7 @@ import { useFrame } from "@react-three/fiber";
 import { easeOutQuad } from "./utils";
 import * as THREE from "three";
 import { firstStateDur, secondStateDur } from "./constants";
+import { easing } from "maath";
 
 export function Environment() {
   const spotLightRef = useRef();
@@ -25,6 +26,9 @@ export function Environment() {
 
     // pointLightRef.current.intensity = progressFade * progressFade * 2000;
     console.log(progressFade * progressFade);
+    state.events.update()
+    // easing.damp3(state.camera.position, [-state.pointer.x * 100, state.pointer.y + 200.5, 500], 0.3, delta) // Move camera
+    // state.camera.lookAt(0, 0, 0) // Look at center
   });
 
   return (
@@ -34,11 +38,11 @@ export function Environment() {
         ref={camera}
         fov={20}
         near={1}
-        far={10000}
+        far={5000}
         makeDefault
-        position={[0, 0, 400]}
+        position={[0, 0, 500]}
         lookAt={[0, 0, 0]}
-        zoom={3}
+        // zoom={3}
       />
       <OrbitControls camera={camera.current} makeDefault />
       {/* <color attach="background" args={["#010327"]} /> */}
@@ -64,7 +68,7 @@ export function Environment() {
         ref={pointLightRef2}
       /> */}
 
-      <ambientLight intensity={0.2} />
+      <ambientLight intensity={0.1} />
     </>
   );
 }
