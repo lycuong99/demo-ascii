@@ -27,7 +27,7 @@ const fragmentShader = /*glsl*/ `
   }
 
   void mainImage(const in vec4 inputColor, const in vec2 uv, out vec4 outputColor) {
-    vec2 p = gl_FragCoord.xy/2.;
+    vec2 p = gl_FragCoord.xy/1.2;
     //vec2 p = gl_FragCoord.xy / 2.;
     // vec2 uv = p / resolution.xy;
     
@@ -98,7 +98,7 @@ class AsciiEffect extends Effect {
 }
 
 // Effect component
-export const AsciiEffectCustom = forwardRef(({ charsize = 4., brightness = 0.3 }, ref) => {
+export const AsciiEffectCustom = forwardRef(({ charsize = 3., brightness = 0.3 }, ref) => {
   const effect = useMemo(
     () =>
       new AsciiEffect({

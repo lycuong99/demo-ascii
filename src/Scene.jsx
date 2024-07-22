@@ -12,7 +12,7 @@ import { easeOutQuad } from "./utils";
 import { firstStateDur, secondStateDur } from "./constants";
 import { useControls } from "leva";
 
-const SPRITE_SCALE = 10;
+const SPRITE_SCALE = 20;
 function Cube(props) {
   const ref = useRef();
   const viewport = useThree((state) => state.viewport);
@@ -24,7 +24,7 @@ function Cube(props) {
   });
 
   return (
-    <e.mesh
+    <mesh
       theatreKey="cube"
       position={[0, 0, 0]}
       // scale={5}
@@ -40,7 +40,7 @@ function Cube(props) {
           uniforms-u_resolution-value={new THREE.Vector2(viewport.width, viewport.height)}
         /> */}
       <meshPhongMaterial attach="material" color="#fff" flatShading />
-    </e.mesh>
+    </mesh>
   );
 }
 function PlaneIkea(props) {
@@ -81,7 +81,7 @@ const FadeSprite = forwardRef(function FadeSprite(props, ref) {
       position={[9999, 9999, 35]}
       scale={[SPRITE_SCALE, SPRITE_SCALE, SPRITE_SCALE]}
     >
-      <spriteMaterial attach="material" map={texture} depthTest={false} premultipliedAlpha={false} opacity={0.6} />
+      <spriteMaterial attach="material" map={texture} depthTest={false} premultipliedAlpha={false} opacity={1} />
     </sprite>
   );
 });
@@ -93,17 +93,28 @@ function Scene() {
   const colorVar = useRef(0);
   const modelRef = useRef();
 
-  // useHelper(pointLightRef2, THREE.PointLightHelper);
 
 
   useFrame((state, delta) => {
-    let rotateVal =  (delta * (Math.PI * 0.5)) / 5;
-   modelRef.current.rotation.y += rotateVal;
-   modelRef.current.rotation.z +=  rotateVal * 2;
+    let rotateVal = (delta * (Math.PI * 0.5)) / 5;
+      const model = modelRef.current;
+    //  modelRef.current.rotation.z +=rotateVal;
+    //  modelRef.current.rotation.x += rotateVal * 2;
+    //  modelRef.current.rotation.z -=rotateVal;
+
+     
 
     const timer = state.clock.getElapsedTime() * 1000;
     const progressFade = easeOutQuad(Math.min(firstStateDur, timer) / firstStateDur);
     const progressSpin = easeOutQuad(Math.min(secondStateDur, timer) / secondStateDur);
+    console.log(progressFade);
+    if (progressFade < 1.) {
+      modelRef.current.rotation.x = Math.PI * 0.5 * progressFade;
+    }else{
+      model.rotateY(-0.5880026);
+      model.rotateOnAxis(new THREE.Vector3(1, 0, 0),  rotateVal);
+      model.rotateY(0.5880026);
+    }
 
     if (progressFade <= 1.0) {
       modelRef.current.position.z = (1 - progressFade) * -800 + 10;
@@ -142,30 +153,23 @@ function Scene() {
       colorVar.current += 0.000001;
       pointLightRef2.current.color = pointLightRef2.current.color.offsetHSL(Math.sin(colorVar.current), 1.0, 0.0);
     };
-    window.addEventListener("mousemove", mousemove);  
+    window.addEventListener("mousemove", mousemove);
     return () => {
       window.removeEventListener("mousemove", mousemove);
     };
   }, []);
 
- 
   return (
     <>
-    {/* <EnvironmentR3f preset="night" /> */}
-   
+      {/* <EnvironmentR3f preset="night" /> */}
+
       <mesh onPointerMove={handlePointerMove}>
         <planeGeometry args={[1000, 1000]} />
         <meshBasicMaterial color={"#ffff00"} visible={false} />
       </mesh>
       {/* <axesHelper scale={100} /> */}
-      <mesh
-        scale={2}
-        geometry={nodes.logo.geometry}
-        position={[0, 0, 0]}
-        ref={modelRef}
-        castShadow
-      >
-        <meshPhongMaterial  flatShading />
+      <mesh scale={2} geometry={nodes.logo.geometry} position={[0, 0, 0]} ref={modelRef} castShadow>
+        <meshPhongMaterial flatShading />
       </mesh>
       <FadeSprite ref={spriteRef} />
 
@@ -179,20 +183,18 @@ function Scene() {
         castShadow
         ref={pointLightRef2}
       />
-      <directionalLight position={[300, 200, 100]} intensity={2.}/>
-      <pointLight position={[-80, 40, 100]} intensity={1002} distance={8100}/>
+      <directionalLight position={[300, 200, 100]} intensity={2} />
+      <pointLight position={[-80, 40, 100]} intensity={1002} distance={8100} />
       <Environment />
       {/* <Cube onPointerMove={handlePointerMove} /> */}
       {/* <PlaneIkea /> */}
-      
+
       <EffectComposer ref={composer}>
         {/* <DepthOfField focusDistance={0} focalLength={0.02} bokehScale={2} height={480} /> */}
         {/* <FadeShader  /> */}
         <AsciiEffectCustom />
         {/* <Noise opacity={0.1} /> */}
       </EffectComposer>
-
-      
     </>
   );
 }

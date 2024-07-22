@@ -25,7 +25,7 @@ export function Environment() {
     const progressSpin = easeOutQuad(Math.min(secondStateDur, timer) / secondStateDur);
 
     // pointLightRef.current.intensity = progressFade * progressFade * 2000;
-    console.log(progressFade * progressFade);
+    // console.log(progressFade * progressFade);
     state.events.update()
     // easing.damp3(state.camera.position, [-state.pointer.x * 100, state.pointer.y + 200.5, 500], 0.3, delta) // Move camera
     // state.camera.lookAt(0, 0, 0) // Look at center
@@ -68,7 +68,7 @@ export function Environment() {
         ref={pointLightRef2}
       /> */}
 
-      <ambientLight intensity={0.1} />
+      <ambientLight intensity={0.5} />
     </>
   );
 }
