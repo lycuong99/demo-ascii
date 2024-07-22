@@ -92,24 +92,42 @@ function Scene() {
   const pointLightRef2 = useRef();
   const colorVar = useRef(0);
   const modelRef = useRef();
+  const prevPointer = useRef({ x: 0, y: 0 });
 
   // useHelper(pointLightRef2, THREE.PointLightHelper);
 
+   const {rotateZ}= useControls({
+    rotateZ: { value: 0.25, min: 0.1, max: 0.7, step: 0.0001, },
+    speedRotate: { value: 0.25, min: 0.1, max: 0.7, step: 0.0001, },
+  })
+
+  const {pointer} = useThree();
 
   useFrame((state, delta) => {
-    let rotateVal =  (delta * (Math.PI * 0.5)) / 5;
-   modelRef.current.rotation.y += rotateVal;
-   modelRef.current.rotation.z +=  rotateVal * 2;
+    let rotateVal = (delta * (Math.PI * 0.5)) / 5;
+    const model = modelRef.current;
+    // modelRef.current.rotation.y += rotateVal;
+    // modelRef.current.rotation.z += rotateVal * 2;
 
     const timer = state.clock.getElapsedTime() * 1000;
     const progressFade = easeOutQuad(Math.min(firstStateDur, timer) / firstStateDur);
     const progressSpin = easeOutQuad(Math.min(secondStateDur, timer) / secondStateDur);
 
-    if (progressFade <= 1.0) {
+    if (progressFade < 1.0) {
       modelRef.current.position.z = (1 - progressFade) * -800 + 10;
 
       let rotVal = -(Math.PI * 0.5) * (1 - progressSpin);
-      // modelRef.current.rotation.x = rotVal - 0.4;
+
+      // model.rotation.x = Math.PI * 0.5 * progressFade;
+    } else {
+      // model.rotateX(-Math.PI * 0.5);
+      model.rotateZ(rotateZ);
+      // model.rotateOnAxis( new THREE.Vector3( -16,26, 0 ) ,+0.004);
+      model.rotateY(Math.PI * 0.005 * pointer.x);
+      model.rotateX(Math.PI * 0.003 * -pointer.y);
+      model.rotateZ(-rotateZ);
+      // model.rotateX(Math.PI * 0.5);
+
     }
 
     if (spriteRef.current) {
@@ -142,30 +160,23 @@ function Scene() {
       colorVar.current += 0.000001;
       pointLightRef2.current.color = pointLightRef2.current.color.offsetHSL(Math.sin(colorVar.current), 1.0, 0.0);
     };
-    window.addEventListener("mousemove", mousemove);  
+    window.addEventListener("mousemove", mousemove);
     return () => {
       window.removeEventListener("mousemove", mousemove);
     };
   }, []);
 
- 
   return (
     <>
-    {/* <EnvironmentR3f preset="night" /> */}
-   
+      {/* <EnvironmentR3f preset="night" /> */}
+
       <mesh onPointerMove={handlePointerMove}>
         <planeGeometry args={[1000, 1000]} />
         <meshBasicMaterial color={"#ffff00"} visible={false} />
       </mesh>
       {/* <axesHelper scale={100} /> */}
-      <mesh
-        scale={2}
-        geometry={nodes.logo.geometry}
-        position={[0, 0, 0]}
-        ref={modelRef}
-        castShadow
-      >
-        <meshPhongMaterial  flatShading />
+      <mesh scale={2} geometry={nodes.logo.geometry} position={[0, 0, 0]} ref={modelRef} castShadow>
+        <meshPhongMaterial flatShading />
       </mesh>
       <FadeSprite ref={spriteRef} />
 
@@ -179,20 +190,18 @@ function Scene() {
         castShadow
         ref={pointLightRef2}
       />
-      <directionalLight position={[300, 200, 100]} intensity={2.}/>
-      <pointLight position={[-80, 40, 100]} intensity={1002} distance={8100}/>
+      <directionalLight position={[300, 200, 100]} intensity={2} />
+      <pointLight position={[-80, 40, 100]} intensity={1002} distance={8100} />
       <Environment />
       {/* <Cube onPointerMove={handlePointerMove} /> */}
       {/* <PlaneIkea /> */}
-      
+
       <EffectComposer ref={composer}>
         {/* <DepthOfField focusDistance={0} focalLength={0.02} bokehScale={2} height={480} /> */}
         {/* <FadeShader  /> */}
         <AsciiEffectCustom />
         {/* <Noise opacity={0.1} /> */}
       </EffectComposer>
-
-      
     </>
   );
 }
