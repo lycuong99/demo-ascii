@@ -5,12 +5,22 @@ import "./App.css";
 import { EffectComposer, Noise } from "@react-three/postprocessing";
 import { AsciiEffectCustom } from "./effects/asciiEffect";
 import { Environment } from "./Environment";
-import { Gltf, Grid, Merged, useGLTF, useHelper, useTexture, Environment as EnvironmentR3f } from "@react-three/drei";
+import {
+  Gltf,
+  Grid,
+  Merged,
+  useGLTF,
+  useHelper,
+  useTexture,
+  Environment as EnvironmentR3f,
+  PresentationControls,
+} from "@react-three/drei";
 // import { editable as e } from "@theatre/r3f";
 import * as THREE from "three";
 import { easeOutQuad } from "./utils";
 import { firstStateDur, secondStateDur } from "./constants";
 import { useControls } from "leva";
+import { easing } from "maath";
 
 const SPRITE_SCALE = 20;
 function Cube(props) {
@@ -93,15 +103,40 @@ function Scene() {
   const colorVar = useRef(0);
   const modelRef = useRef();
   const prevPointer = useRef({ x: 0, y: 0 });
+  const isMousePressRef = useRef(false);
 
   // useHelper(pointLightRef2, THREE.PointLightHelper);
 
-   const {rotateZ}= useControls({
-    rotateZ: { value: 0.25, min: 0.1, max: 0.7, step: 0.0001, },
-    speedRotate: { value: 0.25, min: 0.1, max: 0.7, step: 0.0001, },
-  })
+  const { rotateZ, ascii, charsize, brightness, rotate, rotateSpeed } = useControls({
+    rotateZ: { value: 0.25, min: 0.1, max: 0.7, step: 0.0001 },
+    ascii: {
+      value: true,
+    },
+    rotate: {
+      value: true,
+    },
+    rotateSpeed: {
+      value: 5.,
+      min: 0.,
+      max: 10,
+      step: 0.01,
+    },
+    charsize: {
+      value: 3,
+      min: 1,
+      max: 10,
+      step: 1,
+    },
+    brightness: {
+      value: 0.3,
+      min: 0.1,
+      max: 4,
+      step: 0.01,
+    },
+  });
 
-  const {pointer} = useThree();
+  const { pointer } = useThree();
+  
 
   useFrame((state, delta) => {
     let rotateVal = (delta * (Math.PI * 0.5)) / 5;
@@ -119,15 +154,16 @@ function Scene() {
       let rotVal = -(Math.PI * 0.5) * (1 - progressSpin);
 
       // model.rotation.x = Math.PI * 0.5 * progressFade;
-    } else {
+    } else if (!isMousePressRef.current && rotate) {
       // model.rotateX(-Math.PI * 0.5);
       model.rotateZ(rotateZ);
       // model.rotateOnAxis( new THREE.Vector3( -16,26, 0 ) ,+0.004);
-      model.rotateY(Math.PI * 0.005 * pointer.x);
-      model.rotateX(Math.PI * 0.003 * -pointer.y);
+      // const rotateSpeedB = easing.( Math.PI * 0.001 + 0.005 * rotateSpeed * prevPointer.current.x,Math.PI * 0.001 + 0.005 * rotateSpeed * pointer.x,delta  )
+      const rotateSpeedA = Math.PI * 0.001 + 0.005 * rotateSpeed * pointer.x * delta*190;
+      model.rotateY(rotateSpeedA);
+      // model.rotateX(Math.PI * 0.003 * -pointer.y);
       model.rotateZ(-rotateZ);
-      // model.rotateX(Math.PI * 0.5);
-
+      // model.rotateX(Math.PI * 0.5);F
     }
 
     if (spriteRef.current) {
@@ -135,8 +171,7 @@ function Scene() {
       spriteRef.current.scale.set(spriteScale, spriteScale, spriteScale);
     }
 
-    // colorVar.current += 0.000001;
-    // pointLightRef2.current.color = pointLightRef2.current.color.offsetHSL(Math.sin(colorVar.current), 1.0, 0.0);
+    prevPointer.current = pointer;
   });
 
   const handlePointerMove = (e) => {
@@ -146,15 +181,11 @@ function Scene() {
     let point = intersects[0].point;
     spriteRef.current.position.set(point.x, point.y, 20);
     pointLightRef2.current.position.set(point.x, point.y, pointLightRef2.current.position.z);
-
-    // console.log(pointLightRef2.current.position);
-
-    // colorVar.current += 0.000001;
-    // pointLightRef2.current.color = pointLightRef2.current.color.offsetHSL(Math.sin(colorVar.current), 1.0, 0.0);
   };
 
   const { nodes } = useGLTF("logo.glb");
   console.log(nodes);
+
   useEffect(() => {
     const mousemove = (e) => {
       colorVar.current += 0.000001;
@@ -170,14 +201,36 @@ function Scene() {
     <>
       {/* <EnvironmentR3f preset="night" /> */}
 
-      <mesh onPointerMove={handlePointerMove}>
+      <mesh
+        onPointerMove={handlePointerMove}
+        onPointerDown={() => {
+          isMousePressRef.current = true;
+          console.log("TRUE");
+        }}
+        onPointerUp={() => {
+          isMousePressRef.current = false;
+          console.log("FALSE");
+        }}
+      >
         <planeGeometry args={[1000, 1000]} />
         <meshBasicMaterial color={"#ffff00"} visible={false} />
       </mesh>
       {/* <axesHelper scale={100} /> */}
-      <mesh scale={2} geometry={nodes.logo.geometry} position={[0, 0, 0]} ref={modelRef} castShadow>
-        <meshPhongMaterial flatShading />
-      </mesh>
+      <PresentationControls
+        snap
+        global
+        zoom={0.8}
+        rotation={[0, 0, 0]}
+        polar={[0, Math.PI / 4]}
+        azimuth={[-Math.PI / 4, Math.PI / 4]}
+      >
+        <group dispose={null}>
+          <mesh scale={2} geometry={nodes.logo.geometry} position={[0, 0, 0]} ref={modelRef} castShadow>
+            <meshPhongMaterial flatShading />
+          </mesh>
+        </group>
+      </PresentationControls>
+
       <FadeSprite ref={spriteRef} />
 
       <pointLight
@@ -191,7 +244,7 @@ function Scene() {
         ref={pointLightRef2}
       />
       <directionalLight position={[300, 200, 100]} intensity={2} />
-      <pointLight position={[-80, 40, 100]} intensity={1002} distance={8100} />
+      {/* <pointLight position={[-80, 40, 100]} intensity={1002} distance={8100} /> */}
       <Environment />
       {/* <Cube onPointerMove={handlePointerMove} /> */}
       {/* <PlaneIkea /> */}
@@ -199,7 +252,7 @@ function Scene() {
       <EffectComposer ref={composer}>
         {/* <DepthOfField focusDistance={0} focalLength={0.02} bokehScale={2} height={480} /> */}
         {/* <FadeShader  /> */}
-        <AsciiEffectCustom />
+        {ascii && <AsciiEffectCustom charsize={charsize} brightness={brightness} />}
         {/* <Noise opacity={0.1} /> */}
       </EffectComposer>
     </>

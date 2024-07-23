@@ -26,7 +26,7 @@ export function Environment() {
 
     // pointLightRef.current.intensity = progressFade * progressFade * 2000;
     // console.log(progressFade * progressFade);
-    state.events.update()
+    state.events.update();
     // easing.damp3(state.camera.position, [-state.pointer.x * 100, state.pointer.y + 200.5, 500], 0.3, delta) // Move camera
     // state.camera.lookAt(0, 0, 0) // Look at center
   });
@@ -36,7 +36,7 @@ export function Environment() {
       <PerspectiveCamera
         theatreKey="camera"
         ref={camera}
-        fov={20}
+        fov={25}
         near={1}
         far={5000}
         makeDefault
@@ -44,9 +44,9 @@ export function Environment() {
         lookAt={[0, 0, 0]}
         // zoom={3}
       />
-      <OrbitControls camera={camera.current} makeDefault />
+      {/* <OrbitControls camera={camera.current} makeDefault /> */}
       {/* <color attach="background" args={["#010327"]} /> */}
-
+      <axesHelper scale={100} />
       <pointLight
         // theatreKey="pointLight1"
         color={"#fff"}
