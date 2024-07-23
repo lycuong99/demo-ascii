@@ -92,35 +92,42 @@ function Scene() {
   const pointLightRef2 = useRef();
   const colorVar = useRef(0);
   const modelRef = useRef();
+  const prevPointer = useRef({ x: 0, y: 0 });
 
+  // useHelper(pointLightRef2, THREE.PointLightHelper);
 
+   const {rotateZ}= useControls({
+    rotateZ: { value: 0.25, min: 0.1, max: 0.7, step: 0.0001, },
+    speedRotate: { value: 0.25, min: 0.1, max: 0.7, step: 0.0001, },
+  })
+
+  const {pointer} = useThree();
 
   useFrame((state, delta) => {
     let rotateVal = (delta * (Math.PI * 0.5)) / 5;
-      const model = modelRef.current;
-    //  modelRef.current.rotation.z +=rotateVal;
-    //  modelRef.current.rotation.x += rotateVal * 2;
-    //  modelRef.current.rotation.z -=rotateVal;
-
-     
+    const model = modelRef.current;
+    // modelRef.current.rotation.y += rotateVal;
+    // modelRef.current.rotation.z += rotateVal * 2;
 
     const timer = state.clock.getElapsedTime() * 1000;
     const progressFade = easeOutQuad(Math.min(firstStateDur, timer) / firstStateDur);
     const progressSpin = easeOutQuad(Math.min(secondStateDur, timer) / secondStateDur);
-    console.log(progressFade);
-    if (progressFade < 1.) {
-      modelRef.current.rotation.x = Math.PI * 0.5 * progressFade;
-    }else{
-      model.rotateY(-0.5880026);
-      model.rotateOnAxis(new THREE.Vector3(1, 0, 0),  rotateVal);
-      model.rotateY(0.5880026);
-    }
 
-    if (progressFade <= 1.0) {
+    if (progressFade < 1.0) {
       modelRef.current.position.z = (1 - progressFade) * -800 + 10;
 
       let rotVal = -(Math.PI * 0.5) * (1 - progressSpin);
-      // modelRef.current.rotation.x = rotVal - 0.4;
+
+      // model.rotation.x = Math.PI * 0.5 * progressFade;
+    } else {
+      // model.rotateX(-Math.PI * 0.5);
+      model.rotateZ(rotateZ);
+      // model.rotateOnAxis( new THREE.Vector3( -16,26, 0 ) ,+0.004);
+      model.rotateY(Math.PI * 0.005 * pointer.x);
+      model.rotateX(Math.PI * 0.003 * -pointer.y);
+      model.rotateZ(-rotateZ);
+      // model.rotateX(Math.PI * 0.5);
+
     }
 
     if (spriteRef.current) {
