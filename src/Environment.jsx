@@ -46,7 +46,7 @@ export function Environment() {
       />
       {/* <OrbitControls camera={camera.current} makeDefault /> */}
       {/* <color attach="background" args={["#010327"]} /> */}
-      <axesHelper scale={100} />
+      {/* <axesHelper scale={100} /> */}
       <pointLight
         // theatreKey="pointLight1"
         color={"#fff"}

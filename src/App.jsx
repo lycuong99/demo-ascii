@@ -9,7 +9,7 @@ import { getProject } from "@theatre/core";
 import { SheetProvider } from "@theatre/r3f";
 import { Suspense } from "react";
 import { Grid, Stats, StatsGl } from "@react-three/drei";
-import { useControls } from "leva";
+import { Leva, useControls } from "leva";
 
 // studio.initialize();
 // studio.extend(extension);
@@ -18,7 +18,7 @@ extend({ MatrixMaterial });
 const demoSheet = getProject("Demo Project 1").sheet("Demo Sheet");
 
 function App() {
-  const { gridSize, ...gridConfig } = useControls({
+  const { gridSize, ...gridConfig } = useControls("Grid",{
     gridSize: [200.5, 200.5],
     cellSize: { value: 1, min: 0, max: 10, step: 0.1 },
     cellThickness: { value: 0.6, min: 0, max: 5, step: 0.1 },
@@ -44,14 +44,14 @@ function App() {
             antialias: true,
           }}
         >
-          <StatsGl className="stats" />
+          {/* <StatsGl className="stats" /> */}
 
           <SheetProvider sheet={demoSheet}>
             <Scene />
           </SheetProvider>
         </Canvas>
         <Canvas style={{ pointerEvents: "none", position: "absolute", top: 0, zIndex: -1 }}>
-      <color attach="background" args={["#010327"]} />
+          <color attach="background" args={["#010327"]} />
 
           <Grid args={gridSize} position={[0, -1, 0]} {...gridConfig} />
         </Canvas>

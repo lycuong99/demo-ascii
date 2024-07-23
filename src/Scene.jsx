@@ -2,7 +2,7 @@
 import { forwardRef, useEffect, useRef } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
 import "./App.css";
-import { EffectComposer, Noise } from "@react-three/postprocessing";
+import { Bloom, DepthOfField, EffectComposer, Noise } from "@react-three/postprocessing";
 import { AsciiEffectCustom } from "./effects/asciiEffect";
 import { Environment } from "./Environment";
 import {
@@ -23,6 +23,8 @@ import { useControls } from "leva";
 import { easing } from "maath";
 
 const SPRITE_SCALE = 20;
+const isMobile = window.innerWidth <= 767;
+
 function Cube(props) {
   const ref = useRef();
   const viewport = useThree((state) => state.viewport);
@@ -107,7 +109,7 @@ function Scene() {
 
   // useHelper(pointLightRef2, THREE.PointLightHelper);
 
-  const { rotateZ, ascii, charsize, brightness, rotate, rotateSpeed } = useControls({
+  const { rotateZ, ascii, charsize, brightness, rotate, rotateSpeed, charsizeRatio } = useControls("Scene",{
     rotateZ: { value: 0.25, min: 0.1, max: 0.7, step: 0.0001 },
     ascii: {
       value: true,
@@ -116,8 +118,8 @@ function Scene() {
       value: true,
     },
     rotateSpeed: {
-      value: 5.,
-      min: 0.,
+      value: 5,
+      min: 0,
       max: 10,
       step: 0.01,
     },
@@ -126,6 +128,12 @@ function Scene() {
       min: 1,
       max: 10,
       step: 1,
+    },
+    charsizeRatio: {
+      value: 1,
+      min: 1,
+      max: 5,
+      step: 0.1,
     },
     brightness: {
       value: 0.3,
@@ -136,7 +144,6 @@ function Scene() {
   });
 
   const { pointer } = useThree();
-  
 
   useFrame((state, delta) => {
     let rotateVal = (delta * (Math.PI * 0.5)) / 5;
@@ -157,9 +164,11 @@ function Scene() {
     } else if (!isMousePressRef.current && rotate) {
       // model.rotateX(-Math.PI * 0.5);
       model.rotateZ(rotateZ);
-      // model.rotateOnAxis( new THREE.Vector3( -16,26, 0 ) ,+0.004);
-      // const rotateSpeedB = easing.( Math.PI * 0.001 + 0.005 * rotateSpeed * prevPointer.current.x,Math.PI * 0.001 + 0.005 * rotateSpeed * pointer.x,delta  )
-      const rotateSpeedA = Math.PI * 0.001 + 0.005 * rotateSpeed * pointer.x * delta*190;
+      let rotateSpeedA = Math.PI * 0.001;
+      if (!isMobile) {
+        rotateSpeedA += 0.005 * rotateSpeed * pointer.x * delta * 190;
+      }
+
       model.rotateY(rotateSpeedA);
       // model.rotateX(Math.PI * 0.003 * -pointer.y);
       model.rotateZ(-rotateZ);
@@ -215,7 +224,6 @@ function Scene() {
         <planeGeometry args={[1000, 1000]} />
         <meshBasicMaterial color={"#ffff00"} visible={false} />
       </mesh>
-      {/* <axesHelper scale={100} /> */}
       <PresentationControls
         snap
         global
@@ -251,8 +259,10 @@ function Scene() {
 
       <EffectComposer ref={composer}>
         {/* <DepthOfField focusDistance={0} focalLength={0.02} bokehScale={2} height={480} /> */}
+      
         {/* <FadeShader  /> */}
-        {ascii && <AsciiEffectCustom charsize={charsize} brightness={brightness} />}
+        {/* <Bloom /> */}
+        {ascii && <AsciiEffectCustom charsize={charsize} brightness={brightness} charsizeRatio={charsizeRatio} />}
         {/* <Noise opacity={0.1} /> */}
       </EffectComposer>
     </>

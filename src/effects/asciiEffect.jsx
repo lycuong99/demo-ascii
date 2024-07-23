@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable react/no-unknown-property */
 /* eslint-disable react/display-name */
 import React, { forwardRef, useMemo } from "react";
@@ -11,6 +12,7 @@ const fragmentShader = /*glsl*/ `
   // uniform float time;
   uniform vec2 resolution;
   uniform float uCharsize;
+  uniform float uCharsizeRatio;
   uniform float uBrightness;
 
   float character(float n, vec2 p)
@@ -27,7 +29,7 @@ const fragmentShader = /*glsl*/ `
   }
 
   void mainImage(const in vec4 inputColor, const in vec2 uv, out vec4 outputColor) {
-    vec2 p = gl_FragCoord.xy/1.2;
+    vec2 p = gl_FragCoord.xy/uCharsizeRatio;
     //vec2 p = gl_FragCoord.xy / 2.;
     // vec2 uv = p / resolution.xy;
     
@@ -79,10 +81,11 @@ const fragmentShader = /*glsl*/ `
 
 // Effect implementation
 class AsciiEffect extends Effect {
-  constructor({ charsize, brightness, media,resolution } = {}) {
+  constructor({ charsize, brightness, media, resolution, charsizeRatio } = {}) {
     super("MyCustomEffect", fragmentShader, {
       uniforms: new Map([
         ["uCharsize", new Uniform(charsize)],
+        ["uCharsizeRatio", new Uniform(charsizeRatio)],
         ["uBrightness", new Uniform(brightness)],
         ["media", new Uniform(media)],
         ["resolution", new Uniform(resolution)],
@@ -98,15 +101,16 @@ class AsciiEffect extends Effect {
 }
 
 // Effect component
-export const AsciiEffectCustom = forwardRef(({ charsize = 3., brightness = 0.3 }, ref) => {
+export const AsciiEffectCustom = forwardRef(({ charsize = 3, brightness = 0.3, charsizeRatio = 1 }, ref) => {
   const effect = useMemo(
     () =>
       new AsciiEffect({
         charsize,
         brightness,
         resolution: new THREE.Vector2(window.innerWidth, window.innerHeight),
+        charsizeRatio,
       }),
-    [charsize, brightness]
+    [charsize, brightness, charsizeRatio]
   );
   return <primitive ref={ref} object={effect} dispose={null} />;
 });
