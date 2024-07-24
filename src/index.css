@@ -1,5 +1,36 @@
+@import url("https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  @font-face {
+    font-family: "Neue Machina";
+    font-style: normal;
+    font-weight: 300;
+    font-display: swap;
+    src: url(/fonts/NeueMachina-Light.otf) format("opentype");
+  }
+
+  @font-face {
+    font-family: "Neue Machina";
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url(/fonts/PPNeueMachina-InktrapVariable.woff) format("woff");
+  }
+
+  @font-face {
+    font-family: "Neue Machina";
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src: url(/fonts/NeueMachina-Ultrabold.otf) format("opentype");
+  }
+}
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: "Work Sans", sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
@@ -59,7 +90,7 @@ button:focus-visible {
 
 @media (prefers-color-scheme: light) {
   :root {
-    color: #213547;
+    /* color: #213547; */
     background-color: #ffffff;
   }
   a:hover {
