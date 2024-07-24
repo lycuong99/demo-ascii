@@ -2,25 +2,15 @@
 import { forwardRef, useEffect, useRef } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
 import "./App.css";
-import { Bloom, DepthOfField, EffectComposer, Noise } from "@react-three/postprocessing";
+import { EffectComposer, Noise } from "@react-three/postprocessing";
 import { AsciiEffectCustom } from "./effects/asciiEffect";
 import { Environment } from "./Environment";
-import {
-  Gltf,
-  Grid,
-  Merged,
-  useGLTF,
-  useHelper,
-  useTexture,
-  Environment as EnvironmentR3f,
-  PresentationControls,
-} from "@react-three/drei";
+import { useGLTF, useTexture, PresentationControls } from "@react-three/drei";
 // import { editable as e } from "@theatre/r3f";
 import * as THREE from "three";
 import { easeOutQuad } from "./utils";
 import { firstStateDur, secondStateDur } from "./constants";
 import { useControls } from "leva";
-import { easing } from "maath";
 
 const SPRITE_SCALE = 20;
 const isMobile = window.innerWidth <= 767;
@@ -109,7 +99,7 @@ function Scene() {
 
   // useHelper(pointLightRef2, THREE.PointLightHelper);
 
-  const { rotateZ, ascii, charsize, brightness, rotate, rotateSpeed, charsizeRatio } = useControls("Scene",{
+  const { rotateZ, ascii, charsize, brightness, rotate, rotateSpeed, charsizeRatio } = useControls("Scene", {
     rotateZ: { value: 0.25, min: 0.1, max: 0.7, step: 0.0001 },
     ascii: {
       value: true,
@@ -124,13 +114,13 @@ function Scene() {
       step: 0.01,
     },
     charsize: {
-      value: 3,
+      value: 4,
       min: 1,
       max: 10,
       step: 1,
     },
     charsizeRatio: {
-      value: 1,
+      value: 2.9,
       min: 1,
       max: 5,
       step: 0.1,
@@ -259,7 +249,7 @@ function Scene() {
 
       <EffectComposer ref={composer}>
         {/* <DepthOfField focusDistance={0} focalLength={0.02} bokehScale={2} height={480} /> */}
-      
+
         {/* <FadeShader  /> */}
         {/* <Bloom /> */}
         {ascii && <AsciiEffectCustom charsize={charsize} brightness={brightness} charsizeRatio={charsizeRatio} />}
