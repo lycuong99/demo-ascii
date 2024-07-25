@@ -254,7 +254,7 @@ const Intro = () => {
       <div className="container font-neu flex flex-col items-start justify-center">
         <h1 ref={h1Ref} className="font-neu font-normal text-[70px] uppercase mb-6 h1-text">
           <div className="text-linear-1 span-gradient">The Biggest</div>{" "}
-          <span className="text-linear-2 span-gradient">Decentralized</span> <span className="font-bold">Data</span>
+          <span className="text-linear-2 span-gradient">Decentralized</span>{" "}<span className="font-bold">{" "}Data</span>
           <div></div> <div className="font-bold text-linear-1 span-gradient">Warehouse.</div>
         </h1>
         <p ref={introRef} className="anim text-[20px] text-[#FECE00] uppercase">
