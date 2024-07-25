@@ -5,7 +5,6 @@ export const Header = () => {
     <header className="fixed top-0 left-0 right-0  w-screen h-20 flex justify-center items-center z-50">
       <div className="flex items-center justify-between container">
         <LogoSection />
-
         <Nav />
       </div>
     </header>

@@ -1,9 +1,8 @@
 /* eslint-disable react/no-unknown-property */
 import { useRef } from "react";
-import { OrbitControls, useHelper } from "@react-three/drei";
+import { OrbitControls, PerspectiveCamera, useHelper } from "@react-three/drei";
 import "./App.css";
 import { PointLightHelper } from "three";
-import { editable as e, SheetProvider, PerspectiveCamera, useCurrentSheet } from "@theatre/r3f";
 import { useFrame } from "@react-three/fiber";
 import { easeOutQuad } from "./utils";
 import * as THREE from "three";

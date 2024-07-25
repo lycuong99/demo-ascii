@@ -4,47 +4,46 @@ import "./App.css";
 import { MatrixMaterial } from "./material/MatrixMaterial";
 import Scene from "./Scene";
 
-import { getProject } from "@theatre/core";
-import { SheetProvider } from "@theatre/r3f";
-import { Suspense } from "react";
+import { Suspense, useRef } from "react";
 import { BackgroundGrid } from "./3d-components/BackgroundGrid";
 import MainLayout from "./components/layout/MainLayout";
+import "splitting/dist/splitting.css";
+import "splitting/dist/splitting-cells.css";
+import Intro from "./Intro";
+import { Stats } from "@react-three/drei";
 
 extend({ MatrixMaterial });
 
-const demoSheet = getProject("Demo Project 1").sheet("Demo Sheet");
-
 function App() {
+  const ref = useRef();
   return (
     <MainLayout>
-      <main>
+      <main ref={ref}>
         <Suspense fallback={null}>
+          <Stats />
           <Canvas
+            onCreated={(state) => {
+              // fix curson not work when canvas is overlaied
+              state.events.connect(ref.current);
+            }}
             id="hgell"
             style={{
               position: "fixed",
+              zIndex: -1,
             }}
             className="fixed"
             gl={{
-              shadowMap: {
-                enabled: true,
-              },
-              antialias: true,
+              // shadowMap: {
+              //   enabled: true,
+              // },
+              // antialias: true,
             }}
           >
-            <SheetProvider sheet={demoSheet}>
-              <Scene />
-            </SheetProvider>
+            <Scene />
           </Canvas>
           <BackgroundGrid />
         </Suspense>
-        <div className="container flex flex-col items-start justify-center">
-          <h1 className="font-neu font-normal text-[70px] ">
-            <span>The Biggest</span> Decentralized Data<span></span> <span>Warehouse.</span>
-          </h1>
-          <p>Lorem ipsum dolor sit amet consectetur. </p>
-        </div>
-        <button className="bg-transparent">GET ACCESS</button>
+        <Intro />
       </main>
     </MainLayout>
   );
