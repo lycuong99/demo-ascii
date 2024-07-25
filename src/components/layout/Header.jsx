@@ -21,11 +21,11 @@ const Logo = () => {
 
 const LogoSection = () => {
   return (
-    <did className="flex uppercase items-center">
+    <div className="flex uppercase items-center">
       <Logo />
       <span className="font-neu font-light text-sm mb-1 mr-0.5">LOCKNESS</span>
       <sup className="font-neu text-[7px] mb-1">ltd.</sup>
-    </did>
+    </div>
   );
 };
 

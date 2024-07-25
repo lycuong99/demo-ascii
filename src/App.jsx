@@ -11,6 +11,7 @@ import "splitting/dist/splitting.css";
 import "splitting/dist/splitting-cells.css";
 import Intro from "./Intro";
 import { Stats } from "@react-three/drei";
+import { Leva } from "leva";
 
 extend({ MatrixMaterial });
 
@@ -21,6 +22,9 @@ function App() {
       <main ref={ref}>
         <Suspense fallback={null}>
           <Stats />
+          <Leva
+            hidden // default = false, when true the GUI is hidden
+          />
           <Canvas
             onCreated={(state) => {
               // fix curson not work when canvas is overlaied
@@ -32,12 +36,14 @@ function App() {
               zIndex: -1,
             }}
             className="fixed"
-            gl={{
-              // shadowMap: {
-              //   enabled: true,
-              // },
-              // antialias: true,
-            }}
+            gl={
+              {
+                // shadowMap: {
+                //   enabled: true,
+                // },
+                // antialias: true,
+              }
+            }
           >
             <Scene />
           </Canvas>
