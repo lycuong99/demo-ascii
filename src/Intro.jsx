@@ -124,14 +124,14 @@ const Intro = () => {
         if (iteration < MAX_CELL_ITERATION) {
           setTimeout(() => {
             loop(line, cell, iteration);
-          }, 50);
+          }, 15);
         }
       };
       lines.forEach((line) => {
         line.cells.forEach((cell) => {
           setTimeout(() => {
             loop(line, cell);
-          }, 50);
+          }, 100);
         });
       });
     };
