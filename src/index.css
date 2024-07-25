@@ -69,25 +69,6 @@ h1 {
   line-height: 1.1;
 }
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
-
 @media (prefers-color-scheme: light) {
   :root {
     /* color: #213547; */
@@ -99,4 +80,45 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
+}
+
+.text-linear-1 {
+  /* background: linear-gradient(275.96deg, #F7F7F7 39.04%, #9E9E9E 104.96%);
+  -webkit-background-clip: text; */
+  /* -webkit-text-fill-color: transparent; */
+}
+.text-linear-2 {
+  /* background: linear-gradient(272.73deg, #F7F7F7 45.8%, #747474 95.71%);
+  -webkit-background-clip: text; */
+  /* -webkit-text-fill-color: transparent; */
+}
+/* .text-linear-2 > .word > * {
+  background-image: linear-gradient(135deg, #f00000, #10fda8);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  display: inline-block;
+  
+
+} */
+.text-linear-1 .word .char {
+  background-image: linear-gradient(275.96deg, #f7f7f7 39.04%, #9e9e9e 104.96%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  display: inline-block;
+}
+
+.text-linear-2 .word .char {
+  background-image: linear-gradient(272.73deg, #f7f7f7 45.8%, #747474 95.71%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  display: inline-block;
+
+  /*   background-attachment: fixed; */
+  /*   background-size: cover; */
 }
