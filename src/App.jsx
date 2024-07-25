@@ -19,7 +19,7 @@ function App() {
   const ref = useRef();
   return (
     <MainLayout>
-      <main ref={ref}>
+      <main ref={ref} className="overflow-hidden">
         <Suspense fallback={null}>
           <Stats />
           <Leva

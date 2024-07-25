@@ -248,6 +248,7 @@ const Intro = () => {
       style={{
         zIndex: 10,
         position: "relative",
+  
       }}
     >
       <div className="container font-neu flex flex-col items-start justify-center">
