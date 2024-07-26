@@ -4,9 +4,10 @@ import { memo, useEffect, useLayoutEffect, useRef } from "react";
 import Splitting from "splitting";
 import { cn } from "./lib/util";
 import Button from "./components/button";
+import { Flip } from "gsap/Flip";
 
 class Line {}
-
+gsap.registerPlugin(Flip);
 class Cell {
   constructor({ el, position, value, char }) {
     this.el = el;
@@ -115,7 +116,6 @@ function createTextAnimation(intro) {
         });
       });
 
-
     return {
       position: index,
       el: line,
@@ -208,7 +208,7 @@ const Intro = () => {
         yTo = gsap.quickTo(".flair", "y", { duration: 0.6, ease: "power3" });
 
       window.addEventListener("mousemove", (e) => {
-        xTo(e.clientX - document.querySelector(".flair").offsetWidth / 2);
+        xTo(e.clientX );
         yTo(e.clientY);
       });
     }
@@ -242,26 +242,60 @@ const Intro = () => {
     };
   }, []);
 
+  function handleClick(e) {
+    const btntext = document.querySelector(".btn-text");
+    const btnicon = document.querySelector(".btn-icon");
+    const btn = document.querySelector(".btn-wrapper");
+    const btnE = document.querySelector(".flair");
+    const state = Flip.getState(".btn-text, .btn-icon, .btn-wrapper, .flair");
+
+    btntext.classList.toggle("w-0");
+    btntext.classList.toggle("h-0");
+    btntext.classList.toggle("opacity-0");
+    // btntext.classList.toggle("hidden");
+
+    // btnicon.classList.toggle("hidden");
+    btnicon.classList.toggle("w-0");
+    btnicon.classList.toggle("h-0");
+    btnicon.classList.toggle("opacity-0");
+    // btnicon.classList.toggle("scale-0");
+
+    Flip.from(state, {
+      targets: [btntext, btnicon, btn, btnE],
+      duration: 0.3,
+      // fade: true,
+      absolute: true,
+      scale: true,
+      nested: true,
+      // toggleClass: "flipping",
+      ease: "power1.inOut",
+    })
+  }
+
   return (
     <section
       className="container flex flex-col justify-end h-full pb-20"
       style={{
         zIndex: 10,
         position: "relative",
-  
       }}
     >
       <div className="container font-neu flex flex-col items-start justify-center">
         <h1 ref={h1Ref} className="font-neu font-normal text-[70px] uppercase mb-6 h1-text">
           <div className="text-linear-1 span-gradient">The Biggest</div>{" "}
-          <span className="text-linear-2 span-gradient">Decentralized</span>{" "}<span className="font-bold">{" "}Data</span>
+          <span className="text-linear-2 span-gradient">Decentralized</span> <span className="font-bold"> Data</span>
           <div></div> <div className="font-bold text-linear-1 span-gradient">Warehouse.</div>
         </h1>
         <p ref={introRef} className="anim text-[20px] text-[#FECE00] uppercase">
           Lorem ipsum dolor sit amet consectetur.
         </p>
       </div>
-      <Button className="bg-transparent flair absolute top-0 left-0 font-bold">GET ACCESS</Button>
+      <Button className="bg-transparent flair fixed top-0 left-0 font-bold h-12" onClick={handleClick}>
+        <div className="flex items-center justify-center btn-wrapper relative ">
+          <span className="btn-text overflow-hidden w-0 h-0 opacity-0 relative">GET ACCESS</span>{" "}
+          <span className="btn-icon overflow-hidden inline-block h-4 w-4 border rounded-full border-[#FECE00] absolute"></span>
+        </div>
+      </Button>
     </section>
   );
 };

@@ -30,7 +30,7 @@ const BottomRightCorner = () => {
   return (
     <svg width="7" height="8" viewBox="0 0 7 8" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path
-          fillRule="evenodd"
+        fillRule="evenodd"
         clipRule="evenodd"
         d="M5.74212 0.661255L5.74213 6.16125H0.242188V7.16125L5.74213 7.16125H6.48434H6.74213L6.74212 0.661255H5.74212Z"
         fill="#FECE00"
@@ -54,7 +54,7 @@ const BottomLeftCorner = () => {
 const Button = ({ children, className, ...props }) => {
   return (
     <button className={cn("bg-transparent block outline-none", className)} {...props}>
-      <div className="relative w-full h-full py-3 px-8">
+      <div className="relative w-full h-full py-3 px-8 flex justify-center items-center -translate-x-1/2 -translate-y-1/2">
         <span className="absolute top-0 right-0">
           <TopRightCorner />
         </span>
