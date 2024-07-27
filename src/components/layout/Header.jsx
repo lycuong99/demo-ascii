@@ -1,4 +1,4 @@
-import { Link, NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { LogoIcon } from "../icon";
 import { APP_PATH } from "../../router";
 
@@ -24,11 +24,11 @@ const Logo = () => {
 
 const LogoSection = () => {
   return (
-    <div className="flex uppercase items-center">
+    <Link to={APP_PATH.HOME} className="flex uppercase items-center decoration-white">
       <Logo />
       <span className="font-neu font-light text-sm mb-1 ml-2 mr-0.5">LOCKNESS</span>
       <sup className="font-neu text-[7px] mb-1">ltd.</sup>
-    </div>
+    </Link>
   );
 };
 
@@ -37,12 +37,12 @@ const Nav = () => {
     <nav>
       <ul className="uppercase flex gap-8 font-neu">
         <li>
-          <a href="" className=" h-full flex items-center text-white gap-1 leading-tight">
+          <Link to="#" className=" h-full flex items-center text-white gap-1 leading-tight">
             <span>DOCS</span>
             <span className="self-start">
               <img className="h-4 w-4" src="/mdi-light_arrow-left.svg" />
             </span>
-          </a>
+          </Link>
         </li>
 
         <li>
@@ -59,8 +59,4 @@ const Nav = () => {
       </ul>
     </nav>
   );
-};
-
-const NavItem = ({ children, className }) => {
-  return <li className="uppercase">{children}</li>;
 };

@@ -77,3 +77,19 @@ export const BigXIcon = () => (
     </defs>
   </svg>
 );
+
+export const ArrowLeftIcon = () => (
+  <svg
+    className="w-full h-full transition-colors"
+    width="22"
+    height="22"
+    viewBox="0 0 22 22"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M17 10L17 12L16 12L16 13L15 13L15 14L14 14L14 15L13 15L13 16L11 16L11 14L12 14L12 13L13 13L13 12L4 12L4 10L13 10L13 9L12 9L12 8L11 8L11 6L13 6L13 7L14 7L14 8L15 8L15 9L16 9L16 10"
+      fill="currentColor"
+    />
+  </svg>
+);

@@ -1,12 +1,11 @@
 /* eslint-disable react/no-unknown-property */
 import { forwardRef, useEffect, useRef } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
-import { EffectComposer, Noise } from "@react-three/postprocessing";
+import { EffectComposer } from "@react-three/postprocessing";
 import { AsciiEffectCustom } from "../../effects/asciiEffect";
 import { Environment } from "../../Environment";
 import { useGLTF, useTexture, PresentationControls } from "@react-three/drei";
 // import { editable as e } from "@theatre/r3f";
-import * as THREE from "three";
 import { easeOutQuad } from "../../utils";
 import { firstStateDur, secondStateDur } from "../../constants";
 import { useControls } from "leva";
@@ -76,7 +75,6 @@ const FadeSprite = forwardRef(function FadeSprite(props, ref) {
   });
   return (
     <sprite
-      
       theatreKey="sprite"
       ref={ref}
       position={[9999, 9999, 35]}
@@ -135,7 +133,7 @@ function Scene() {
   const { pointer } = useThree();
 
   useFrame((state, delta) => {
-  //  console.log(pointer.x)
+    //  console.log(pointer.x)
     let rotateVal = (delta * (Math.PI * 0.5)) / 5;
     const model = modelRef.current;
     // modelRef.current.rotation.y += rotateVal;
@@ -151,7 +149,7 @@ function Scene() {
       let rotVal = -(Math.PI * 0.5) * (1 - progressSpin);
 
       // model.rotation.x = Math.PI * 0.5 * progressFade;
-    } else if ( rotate) {
+    } else if (rotate) {
       // model.rotateX(-Math.PI * 0.5);
       model.rotateZ(rotateZ);
 
@@ -159,7 +157,7 @@ function Scene() {
       if (!isMobile) {
         rotateSpeedA += 0.005 * rotateSpeed * pointer.x * delta * 190;
       }
-      if(isMousePressRef.current){
+      if (isMousePressRef.current) {
         rotateSpeedA *= 0.2;
       }
 
@@ -182,10 +180,10 @@ function Scene() {
     // console.log(e.intersections);
     const intersects = e.intersections;
     let point = intersects[0].point;
-  //  console.log(e);
+    //  console.log(e);
 
-    const wrongNumber = 0
-    spriteRef.current.position.set(point.x+wrongNumber, point.y, 35);
+    const wrongNumber = 0;
+    spriteRef.current.position.set(point.x + wrongNumber, point.y, 35);
     pointLightRef2.current.position.set(point.x, point.y, pointLightRef2.current.position.z);
   };
 

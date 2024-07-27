@@ -1,124 +1,12 @@
 /* eslint-disable react/prop-types */
 import gsap from "gsap";
-import { memo, useEffect, useLayoutEffect, useRef } from "react";
-import Splitting from "splitting";
-import { cn } from "../../lib/util";
+import { memo, useLayoutEffect, useRef } from "react";
 import Button from "../../components/button";
 import { Flip } from "gsap/Flip";
-import { getRandomChar } from "../../utils";
+import { H1 } from "@/components/typography";
+import { createTextAnimation } from "@/animation";
 
-class Line {}
 gsap.registerPlugin(Flip);
-class Cell {
-  constructor({ el, position, value, char }) {
-    this.el = el;
-    this.position = position;
-    this.value = value;
-    this.char = char;
-  }
-
-  set(char) {
-    this.el.innerHTML = char;
-    this.char = char;
-  }
-
-  reset() {
-    this.el.innerHTML = this.value;
-  }
-}
-
-function createTextAnimation(intro) {
-  const results = Splitting({
-    target: intro,
-    by: "lines",
-  });
-
-  console.log(results);
-  results.forEach((s) => Splitting({ target: s.words }));
-
-  const lines = results[0].lines.map((line, index) => {
-    const words = line;
-    const cells = words
-      .flatMap((word, index) => {
-        const chars = word.querySelectorAll(".char");
-
-        return [...chars];
-      })
-      .map((char, index) => {
-        return new Cell({
-          el: char,
-          position: index,
-          value: char.textContent,
-          char: char.textContent,
-        });
-      });
-
-    return {
-      position: index,
-      el: line,
-      cells: cells,
-    };
-  });
-
-  const clear = () => {
-    lines.forEach((line) => {
-      line.cells.forEach((cell) => {
-        cell.set("&nbsp;");
-      });
-    });
-  };
-  clear();
-
-  const animate = () => {
-    // intro.classList.remove("opacity-0");
-    const MAX_CELL_ITERATION = 45;
-
-    const loop = (line, cell, iteration = 0) => {
-      const prev = cell.position === 0 ? 0 : cell.position - 1;
-
-      cell.cache = cell.char;
-      if (iteration === MAX_CELL_ITERATION - 1) {
-        cell.reset();
-      } else if (cell.position === 0) {
-        const randomChar =
-          iteration < 9 ? ["*", "-", "\u0027", "\u0022"][Math.floor(Math.random() * 4)] : getRandomChar();
-        cell.set(randomChar);
-      } else {
-        // el.textContent = cache;
-        cell.set(line.cells[prev].cache);
-      }
-
-      if (cell.cache != "&nbsp;") {
-        ++iteration;
-      }
-
-      if (iteration < MAX_CELL_ITERATION) {
-        setTimeout(() => {
-          loop(line, cell, iteration);
-        }, 16);
-      }
-    };
-    lines.forEach((line, i) => {
-      line.cells.forEach((cell) => {
-        setTimeout(() => {
-          loop(line, cell);
-        }, (i + 1) * 200);
-      });
-    });
-  };
-  const reset = () => {
-    lines.forEach((line) => {
-      line.cells.forEach((cell) => {
-        cell.reset();
-      });
-    });
-  };
-  return {
-    clear,
-    animate,
-    reset,
-  };
-}
 
 const Intro = () => {
   console.log("hello");
@@ -141,17 +29,18 @@ const Intro = () => {
     let timeout1 = setTimeout(() => {
       animate1();
     }, 300);
+
     function handleClick(e) {
       const btntext = document.querySelector(".btn-text");
       const btnicon = document.querySelector(".btn-icon");
       const btn = document.querySelector(".btn-wrapper");
       const btnE = document.querySelector(".flair");
       const state = Flip.getState(".btn-text, .btn-icon, .btn-wrapper, .flair");
-  
+
       const isSmall = !btnIsAccessRef.current;
       gsap.to(btnE, {
         width: isSmall ? 160 : 64,
-  
+
         // height: isSmall ? 64 : 64,
         ease: "power1.inOut",
         duration: 0.3,
@@ -168,22 +57,22 @@ const Intro = () => {
         ease: "power1.inOut",
         duration: 0.3,
       });
-  
+
       // btntext.classList.toggle("w-0");
       // btntext.classList.toggle("h-0");
       // btntext.classList.toggle("opacity-0");
       // // btntext.classList.toggle("hidden");
-  
+
       // // btnicon.classList.toggle("hidden");
       // btnicon.classList.toggle("w-0");
       // btnicon.classList.toggle("h-0");
       // btnicon.classList.toggle("opacity-0");
       // // btnicon.classList.toggle("scale-0");
-  
+
       // Flip.from(state, {
       //   targets: [btntext, btnicon, btn, btnE],
       //   duration: 0.3,
-  
+
       //   // fade: true,
       //   absolute: true,
       //   // scale: true,
@@ -191,17 +80,17 @@ const Intro = () => {
       //   toggleClass: "flipping",
       //   ease: "power1.inOut",
       // });
-  
+
       btnIsAccessRef.current = !btnIsAccessRef.current;
     }
-    function handleClickWindow(e){
+    function handleClickWindow(e) {
       const btn = document.querySelector(".flair");
       btn.style.pointerEvents = "all";
       // btn.style.visibility = "hidden";
       let receiver = document.querySelector("main");
       if (document.elementsFromPoint(e.clientX, e.clientY).includes(btn)) {
         console.log("click");
-        
+
         handleClick(e);
       }
       // receiver.dispatchEvent(new Event("mousemove"), { bubbles: false, cancelable: false });
@@ -219,7 +108,6 @@ const Intro = () => {
         yTo(e.clientY);
       });
 
-      
       window.addEventListener("click", handleClickWindow);
     }
 
@@ -332,15 +220,19 @@ const Intro = () => {
       }}
     >
       <div className="container font-neu flex flex-col items-start justify-center">
-        <h1 ref={h1Ref} className="font-neu font-normal text-[70px] uppercase mb-6 h1-text pointer-events-none">
-          <div className="text-linear-1 span-gradient">Building The </div>{" "}
-          <span className="text-linear-2 span-gradient">Biggest Decentralized</span>{" "}
-          <span className="font-bold"> </span>
-          <div></div> <div className="font-bold text-linear-1 span-gradient">Data Warehouse</div>
-        </h1>
-        <p ref={introRef} className="anim text-[20px] text-[#FECE00] uppercase">
-          Lorem ipsum dolor sit amet consectetur.
-        </p>
+        <H1 ref={h1Ref} className="mb-6 pointer-events-none">
+          <pre>
+            <div className="text-linear-1 span-gradient">Building The </div>{" "}
+            <span className="text-linear-2 span-gradient">Biggest Decentralized</span>{" "}
+            <span className="font-bold"> </span>
+           <div className="font-bold text-linear-1 span-gradient">Data Warehouse</div>
+          </pre>
+        </H1>
+        <pre ref={introRef} className="anim text-[20px] text-[#FECE00] uppercase ">
+          <div>Join the movement towards a decentralized future </div>
+          <div>where your data is securely stored, easily accessible, </div>
+          <div>and entirely under your control.</div>
+        </pre>
       </div>
       <Button
         className="bg-transparent flair absolute top-0 left-0 font-bold h-16 group "
