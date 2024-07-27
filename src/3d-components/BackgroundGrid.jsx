@@ -17,10 +17,12 @@ export const BackgroundGrid = () => {
     infiniteGrid: true,
   });
   return (
-    <Canvas style={{ pointerEvents: "none", position: "absolute", top: 0, zIndex: -2 }}>
-      <color attach="background" args={["#010327"]} />
+    <>
+      <Canvas style={{ pointerEvents: "none", position: "fixed", top: 0, zIndex: -2 }} className="h-screen w-screen">
+        <color attach="background" args={["#010327"]} />
 
-      <Grid args={gridSize} position={[0, -1, 0]} {...gridConfig} />
-    </Canvas>
+        <Grid args={gridSize} position={[0, -1, 0]} {...gridConfig} />
+      </Canvas>
+    </>
   );
 };

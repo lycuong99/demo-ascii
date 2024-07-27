@@ -53,8 +53,8 @@ const BottomLeftCorner = () => {
 };
 const Button = ({ children, className, ...props }) => {
   return (
-    <button className={cn("bg-transparent block outline-none", className)} {...props}>
-      <div className="relative w-full h-full py-3 px-8 flex justify-center items-center -translate-x-1/2 -translate-y-1/2">
+    <button className={cn("bg-transparent block outline-none overflow-hidden ", className)} {...props}>
+      <div className="relative w-full h-full py-3 px-8 flex justify-center items-center ">
         <span className="absolute top-0 right-0">
           <TopRightCorner />
         </span>

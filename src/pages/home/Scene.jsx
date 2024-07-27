@@ -1,15 +1,14 @@
 /* eslint-disable react/no-unknown-property */
 import { forwardRef, useEffect, useRef } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
-import "./App.css";
 import { EffectComposer, Noise } from "@react-three/postprocessing";
-import { AsciiEffectCustom } from "./effects/asciiEffect";
-import { Environment } from "./Environment";
+import { AsciiEffectCustom } from "../../effects/asciiEffect";
+import { Environment } from "../../Environment";
 import { useGLTF, useTexture, PresentationControls } from "@react-three/drei";
 // import { editable as e } from "@theatre/r3f";
 import * as THREE from "three";
-import { easeOutQuad } from "./utils";
-import { firstStateDur, secondStateDur } from "./constants";
+import { easeOutQuad } from "../../utils";
+import { firstStateDur, secondStateDur } from "../../constants";
 import { useControls } from "leva";
 
 const SPRITE_SCALE = 20;
@@ -77,11 +76,11 @@ const FadeSprite = forwardRef(function FadeSprite(props, ref) {
   });
   return (
     <sprite
-      sca
+      
       theatreKey="sprite"
       ref={ref}
       position={[9999, 9999, 35]}
-      scale={[SPRITE_SCALE, SPRITE_SCALE, SPRITE_SCALE]}
+      // scale={[SPRITE_SCALE, SPRITE_SCALE, SPRITE_SCALE]}
     >
       <spriteMaterial attach="material" map={texture} depthTest={false} premultipliedAlpha={false} opacity={1} />
     </sprite>
@@ -136,6 +135,7 @@ function Scene() {
   const { pointer } = useThree();
 
   useFrame((state, delta) => {
+  //  console.log(pointer.x)
     let rotateVal = (delta * (Math.PI * 0.5)) / 5;
     const model = modelRef.current;
     // modelRef.current.rotation.y += rotateVal;
@@ -146,17 +146,21 @@ function Scene() {
     const progressSpin = easeOutQuad(Math.min(secondStateDur, timer) / secondStateDur);
 
     if (progressFade < 1.0) {
-      modelRef.current.position.z = (1 - progressFade) * -800 + 10;
+      modelRef.current.position.z = (1 - progressFade) * -1000 + 10;
 
       let rotVal = -(Math.PI * 0.5) * (1 - progressSpin);
 
       // model.rotation.x = Math.PI * 0.5 * progressFade;
-    } else if (!isMousePressRef.current && rotate) {
+    } else if ( rotate) {
       // model.rotateX(-Math.PI * 0.5);
       model.rotateZ(rotateZ);
+
       let rotateSpeedA = Math.PI * 0.001;
       if (!isMobile) {
         rotateSpeedA += 0.005 * rotateSpeed * pointer.x * delta * 190;
+      }
+      if(isMousePressRef.current){
+        rotateSpeedA *= 0.2;
       }
 
       model.rotateY(rotateSpeedA);
@@ -178,12 +182,15 @@ function Scene() {
     // console.log(e.intersections);
     const intersects = e.intersections;
     let point = intersects[0].point;
-    spriteRef.current.position.set(point.x, point.y, 20);
+  //  console.log(e);
+
+    const wrongNumber = 0
+    spriteRef.current.position.set(point.x+wrongNumber, point.y, 35);
     pointLightRef2.current.position.set(point.x, point.y, pointLightRef2.current.position.z);
   };
 
   const { nodes } = useGLTF("logo.glb");
-  console.log(nodes);
+  // console.log(nodes);
 
   useEffect(() => {
     const mousemove = (e) => {
@@ -203,11 +210,11 @@ function Scene() {
       <mesh
         onPointerMove={handlePointerMove}
         onPointerDown={() => {
-          isMousePressRef.current = true;
+          // isMousePressRef.current = true;
           console.log("TRUE");
         }}
         onPointerUp={() => {
-          isMousePressRef.current = false;
+          // isMousePressRef.current = false;
           console.log("FALSE");
         }}
       >
@@ -216,14 +223,14 @@ function Scene() {
       </mesh>
       <PresentationControls
         snap
-        global
+        // global
         zoom={0.8}
         rotation={[0, 0, 0]}
         polar={[0, Math.PI / 4]}
         azimuth={[-Math.PI / 4, Math.PI / 4]}
       >
         <group dispose={null}>
-          <mesh scale={2} geometry={nodes.logo.geometry} position={[0, 0, 0]} ref={modelRef} castShadow>
+          <mesh scale={2} geometry={nodes.logo.geometry} position={[0, 20, 0]} ref={modelRef} castShadow>
             <meshPhongMaterial flatShading />
           </mesh>
         </group>

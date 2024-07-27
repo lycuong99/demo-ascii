@@ -35,12 +35,12 @@ export function Environment() {
       <PerspectiveCamera
         theatreKey="camera"
         ref={camera}
-        fov={25}
+        fov={22}
         near={1}
-        far={5000}
+        far={1000}
         makeDefault
         position={[0, 0, 500]}
-        lookAt={[0, 0, 0]}
+        // lookAt={[0, 0, 0]}
         // zoom={3}
       />
       {/* <OrbitControls camera={camera.current} makeDefault /> */}

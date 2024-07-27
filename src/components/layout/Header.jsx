@@ -1,4 +1,6 @@
+import { Link, NavLink } from "react-router-dom";
 import { LogoIcon } from "../icon";
+import { APP_PATH } from "../../router";
 
 export const Header = () => {
   return (
@@ -7,6 +9,7 @@ export const Header = () => {
         <LogoSection />
         <Nav />
       </div>
+      <div className="container h-[1px] bg-white/20 absolute bottom-0"></div>
     </header>
   );
 };
@@ -23,7 +26,7 @@ const LogoSection = () => {
   return (
     <div className="flex uppercase items-center">
       <Logo />
-      <span className="font-neu font-light text-sm mb-1 mr-0.5">LOCKNESS</span>
+      <span className="font-neu font-light text-sm mb-1 ml-2 mr-0.5">LOCKNESS</span>
       <sup className="font-neu text-[7px] mb-1">ltd.</sup>
     </div>
   );
@@ -34,16 +37,16 @@ const Nav = () => {
     <nav>
       <ul className="uppercase flex gap-8 font-neu">
         <li>
-          <a href="" className="flex content-baseline text-white gap-1">
+          <a href="" className=" h-full flex items-center text-white gap-1 leading-tight">
             <span>DOCS</span>
-            <span className="h-4 w-4">
-              <img className="h-full w-full" src="/mdi-light_arrow-left.svg" />
+            <span className="self-start">
+              <img className="h-4 w-4" src="/mdi-light_arrow-left.svg" />
             </span>
           </a>
         </li>
 
         <li>
-          <a href="" className="flex justify-center items-center text-white gap-2">
+          <Link to={APP_PATH.EARLY_ACCESS} className="flex justify-center items-center text-white gap-2">
             <span>
               <img src="/plus.svg" />
             </span>
@@ -51,7 +54,7 @@ const Nav = () => {
             <span>
               <img src="/plus.svg" />
             </span>
-          </a>
+          </Link>
         </li>
       </ul>
     </nav>
