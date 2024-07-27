@@ -43,6 +43,18 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+.container {
+  width: clamp(500px, 100vw - 80px, 98vw);
+  /* padding: 0 1rem; */
+}
+@media screen and (max-width: 768px) {
+  .container {
+    width: calc(100vw - 3rem);
+    /* padding: 0 1rem; */
+  }
+}
+
 /* 
 a {
   font-weight: 500;

@@ -16,6 +16,20 @@ export default {
     },
     container: {
       center: true,
+      // padding:{
+      //   DEFAULT: "2rem",
+      //   // sm: '2rem',
+      //   // lg: '4rem',
+      //   // xl: '5rem',
+      // },
+      screens:{
+        sm: "100vw",
+        // md: "768px",
+        // lg: "1024px",
+        // xl: "1280px",
+        // "2xl": "1540px",
+        // "3xl": "1800px",
+      }
     },
   },
   plugins: [],

@@ -3,7 +3,7 @@ import gsap from "gsap";
 import { memo, useLayoutEffect, useRef } from "react";
 import Button from "../../components/button";
 import { Flip } from "gsap/Flip";
-import { H1 } from "@/components/typography";
+import { H1, Subheader1 } from "@/components/typography";
 import { createTextAnimation } from "@/animation";
 
 gsap.registerPlugin(Flip);
@@ -220,19 +220,29 @@ const Intro = () => {
       }}
     >
       <div className="container font-neu flex flex-col items-start justify-center">
-        <H1 ref={h1Ref} className="mb-6 pointer-events-none">
+        <H1 ref={h1Ref} className="hidden lg:block mb-6 pointer-events-none">
           <pre>
             <div className="text-linear-1 span-gradient">Building The </div>{" "}
             <span className="text-linear-2 span-gradient">Biggest Decentralized</span>{" "}
-            <span className="font-bold"> </span>
-           <div className="font-bold text-linear-1 span-gradient">Data Warehouse</div>
+            <div className="font-bold text-linear-1 span-gradient">Data Warehouse</div>
           </pre>
         </H1>
-        <pre ref={introRef} className="anim text-[20px] text-[#FECE00] uppercase ">
-          <div>Join the movement towards a decentralized future </div>
-          <div>where your data is securely stored, easily accessible, </div>
-          <div>and entirely under your control.</div>
-        </pre>
+        <H1 className="block lg:hidden mb-6 pointer-events-none">
+          <pre>
+            <div className="text-linear-1 span-gradient">Building The </div>
+            <span className="text-linear-2 span-gradient">Biggest Decentralized</span>{" "}
+            <div className="font-bold text-linear-1 span-gradient">Data Warehouse</div>
+          </pre>
+        </H1>
+        <Subheader1 as="pre" ref={introRef} className="hidden lg:block anim text-[14px] lg:text-[20px] text-[#FECE00] uppercase ">
+          <span className="block">Join the movement towards a decentralized future </span>
+          <span className="block">where your data is securely stored, easily accessible, </span>
+          <span className="block">and entirely under your control.</span>
+        </Subheader1>
+        <Subheader1 className="block lg:hidden text-[14px] lg:text-[20px] max-w-[40ch]  text-[#FECE00] uppercase text-balance ">
+          Join the movement towards a decentralized future where your data is securely stored, easily accessible, and
+          entirely under your control.
+        </Subheader1>
       </div>
       <Button
         className="bg-transparent flair absolute top-0 left-0 font-bold h-16 group "

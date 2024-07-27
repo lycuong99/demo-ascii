@@ -11,7 +11,7 @@ const MainLayout = () => {
     <>
       <Header />
       <BackgroundGrid />
-      <Outlet />
+      <Outlet  />
       <Leva hidden />
       <div className="h-screen w-screen fixed top-0 pb-4 pt-32 pointer-events-none">
         <div className="container h-full relative ">
