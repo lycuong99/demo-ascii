@@ -2,25 +2,68 @@ import { createTextAnimation } from "@/animation";
 import { ArrowLeftIcon } from "@/components/icon";
 import SimpleStar from "@/components/SimpleStar";
 import { H1 } from "@/components/typography";
-import { useLayoutEffect, useRef } from "react";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import { forwardRef, useLayoutEffect, useRef } from "react";
 
 const EarlyAccess = () => {
   const introRef = useRef(null);
   const h1Ref = useRef(null);
+  const starRef = useRef(null);
+  const emailRef = useRef(null);
+
+  useGSAP(() => {
+    // gsap code here...
+
+    gsap.from(emailRef.current, {
+      opacity: 0,
+        scale: 0.7,
+      perspective: 1000,
+      duration: 0.6,
+      z: 1000,
+      //   y: 100,
+      ease: "power1.inOut",
+    });
+  });
+
   useLayoutEffect(() => {
     const intro = introRef.current;
     const h1 = h1Ref.current;
     // intro.classList.add("opacity-0");
 
-    const { animate, clear, reset } = createTextAnimation(intro);
+    const { animate, clear, reset } = createTextAnimation(intro, {
+      interation: 40,
+      // lineGapTime: 200
+    });
     const { animate: animate1, reset: reset1 } = createTextAnimation(h1);
 
     let timeout = setTimeout(() => {
       animate();
-    }, 900);
+    }, 500);
     let timeout1 = setTimeout(() => {
       animate1();
     }, 300);
+
+    gsap.fromTo(
+      starRef.current,
+      {
+        scale: 0,
+        opacity: 0,
+        duration: 1,
+      },
+      {
+        scale: 1,
+        opacity: 1,
+        duration: 1,
+      }
+    );
+    gsap.to(starRef.current, {
+      duration: 2,
+      y: -10,
+      repeat: -1,
+      yoyo: true,
+      ease: "sine.inOut",
+    });
 
     return () => {
       clearTimeout(timeout);
@@ -34,7 +77,9 @@ const EarlyAccess = () => {
     <main>
       <div className="container h-full flex flex-col items-center justify-evenly">
         <div className="flex flex-col justify-center items-center">
-          <SimpleStar />
+          <div ref={starRef}>
+            <SimpleStar />
+          </div>
           <H1 ref={h1Ref} className="mt-8 mb-6">
             <pre> WE’RE Lauching soon </pre>
           </H1>
@@ -43,15 +88,15 @@ const EarlyAccess = () => {
             <div> We'll notify you when we launch!</div>
           </pre>
         </div>
-        <EmailSection />
+        <EmailSection ref={emailRef} />
       </div>
     </main>
   );
 };
 
-const EmailSection = () => {
+const EmailSection = forwardRef(({}, ref) => {
   return (
-    <div className="flex gap-2 pointer-events-auto">
+    <div className="flex gap-2 pointer-events-auto" ref={ref}>
       <input
         className="w-[360px] h-[42px] pl-3 font-neu uppercase py-2 border bg-bg border-white text-white placeholder:text-[#8A8B9B]"
         placeholder="Enter your email"
@@ -64,5 +109,5 @@ const EmailSection = () => {
       </button>
     </div>
   );
-};
+});
 export default EarlyAccess;
