@@ -121,7 +121,7 @@ const Intro = () => {
 
         gradientChars.forEach(function (char, i) {
           //bua
-          const charParentWidth = char.parentElement.offsetWidth * 3;
+          const charParentWidth = char.parentElement.offsetWidth * 5;
           char.style.backgroundSize = charParentWidth + "px 100%";
 
           offset += char.previousElementSibling?.offsetWidth || 0;
@@ -254,7 +254,7 @@ const Intro = () => {
         // onMouseMove={hanleMouseBtn}
       >
         <div className="flex items-center justify-center btn-wrapper relative po">
-          <span className="btn-text overflow-hidden absolute w-32 group-hover:text-[#FECE00]">GET ACCESS</span>
+          <span className="btn-text overflow-hidden absolute w-32 text-[#FECE00]">GET ACCESS</span>
           <span className="btn-icon overflow-hidden inline-block h-4 w-4 border rounded-full border-[#FECE00] absolute"></span>
         </div>
       </Button>
