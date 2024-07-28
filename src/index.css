@@ -50,7 +50,7 @@
 }
 @media screen and (max-width: 768px) {
   .container {
-    width: calc(100vw - 3rem);
+    width: calc(100vw - 2rem);
     /* padding: 0 1rem; */
   }
 }

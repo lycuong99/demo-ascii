@@ -17,7 +17,7 @@ const EarlyAccess = () => {
 
     gsap.from(emailRef.current, {
       opacity: 0,
-        scale: 0.7,
+      scale: 0.7,
       perspective: 1000,
       duration: 0.6,
       z: 1000,
@@ -75,7 +75,7 @@ const EarlyAccess = () => {
   }, []);
   return (
     <main>
-      <div className="container h-full flex flex-col items-center justify-evenly">
+      <div className="container h-full flex flex-col items-center gap-12 justify-center lg:justify-evenly">
         <div className="flex flex-col justify-center items-center">
           <div ref={starRef}>
             <SimpleStar />
@@ -83,10 +83,16 @@ const EarlyAccess = () => {
           <H1 ref={h1Ref} className="mt-8 mb-6">
             <pre> WE’RE Lauching soon </pre>
           </H1>
-          <pre ref={introRef} className="anim text-[20px] text-[#B1B1B1] uppercase  text-center">
+          <pre
+            ref={introRef}
+            className="anim hidden lg:block text-[11px] sm:text-[14px] md:text-[16px] lg:text-[20px] text-[#B1B1B1] uppercase  text-center"
+          >
             <div>Get the Early Access Pass to be the first to try Beta.</div>
             <div> We'll notify you when we launch!</div>
           </pre>
+          <p className="lg:hidden text-[11px] sm:text-[14px] md:text-[16px] lg:text-[20px] text-[#B1B1B1] uppercase text-left text-center">
+            Get the Early Access Pass to be the first to try Beta. We'll notify you when we launch!
+          </p>
         </div>
         <EmailSection ref={emailRef} />
       </div>
@@ -96,9 +102,9 @@ const EarlyAccess = () => {
 
 const EmailSection = forwardRef(({}, ref) => {
   return (
-    <div className="flex gap-2 pointer-events-auto" ref={ref}>
+    <div className="flex flex-col items-center lg:flex-row gap-2 pointer-events-auto w-full" ref={ref}>
       <input
-        className="w-[360px] h-[42px] pl-3 font-neu uppercase py-2 border bg-bg border-white text-white placeholder:text-[#8A8B9B]"
+        className="w-full lg:w-[360px] h-[42px] pl-3 font-neu uppercase py-2 border text-xs lg:text-sm bg-bg border-white text-white placeholder:text-[#8A8B9B]"
         placeholder="Enter your email"
       />
       <button className="pointer-events-auto h-[42px] shadow-solid hover:bg-white hover:text-blueBlack w-[180px] px-3 font-bold bg-bg border border-white hover:border-blueBlack flex gap-2 items-center justify-center transition-colors">

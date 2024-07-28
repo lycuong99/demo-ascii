@@ -29,6 +29,8 @@ export function Environment() {
     // easing.damp3(state.camera.position, [-state.pointer.x * 100, state.pointer.y + 200.5, 500], 0.3, delta) // Move camera
     // state.camera.lookAt(0, 0, 0) // Look at center
   });
+  const isMobile = window.innerWidth < 1000;
+  const zCamera = isMobile ? 700 : 500;
 
   return (
     <>
@@ -39,7 +41,7 @@ export function Environment() {
         near={1}
         far={1000}
         makeDefault
-        position={[0, 0, 500]}
+        position={[0, 0, zCamera]}
         // lookAt={[0, 0, 0]}
         // zoom={3}
       />

@@ -11,7 +11,7 @@ import { firstStateDur, secondStateDur } from "../../constants";
 import { useControls } from "leva";
 
 const SPRITE_SCALE = 20;
-const isMobile = window.innerWidth <= 767;
+const isMobile = window.innerWidth <= 1000;
 
 function Cube(props) {
   const ref = useRef();

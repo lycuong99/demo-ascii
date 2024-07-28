@@ -30,7 +30,7 @@ const Social = ({ className }) => {
   return (
     <div className={cn("flex flex-col gap-4", className)}>
       {socialList.map((item) => (
-        <a href={item.url} key={item.id} className=" p-2 flex justify-center items-center">
+        <a href={item.url} key={item.id} className=" p-1.5 lg:p-2 flex justify-center items-center">
           <img className="h-full aspect-square fill-teal-400" src={item.icon} alt={item.name} />
         </a>
       ))}
