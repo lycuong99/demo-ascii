@@ -11,7 +11,7 @@ const socialList = [
     id: 2,
     icon: "/twitter.svg",
     name: "Twitter",
-    url: "#",
+    url: "https://x.com/locknessdotxyz",
   },
   {
     id: 4,
