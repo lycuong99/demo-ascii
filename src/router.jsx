@@ -3,6 +3,7 @@ import Home from "./pages/home";
 import EarlyAccess from "./pages/early-access";
 import MainLayout from "./components/layout/MainLayout";
 import { gsapLoader } from "./animation/gsapLoader";
+import FirstLoader from "./FirstLoader";
 
 export const APP_PATH = {
   HOME: "/",
@@ -26,6 +27,10 @@ const router = createBrowserRouter([
       },
     ],
   },
+  {
+    path: "/load",
+    element: <FirstLoader />
+  }
 ]);
 export const Router = () => {
   return <RouterProvider router={router}></RouterProvider>;
