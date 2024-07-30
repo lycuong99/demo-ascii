@@ -75,7 +75,7 @@ const EarlyAccess = () => {
   }, []);
   return (
     <main>
-      <div className="container h-full flex flex-col items-center gap-12 justify-center lg:justify-evenly">
+      <div className="container h-full flex flex-col items-center gap-12 justify-center lg:gap-20">
         <div className="flex flex-col justify-center items-center">
           <div ref={starRef}>
             <SimpleStar />
@@ -90,7 +90,7 @@ const EarlyAccess = () => {
             <div>Get the Early Access Pass to be the first to try Beta.</div>
             <div> We'll notify you when we launch!</div>
           </pre>
-          <p className="lg:hidden text-[11px] sm:text-[14px] md:text-[16px] lg:text-[20px] text-[#B1B1B1] uppercase text-left text-center">
+          <p className="lg:hidden text-[11px] sm:text-[14px] md:text-[16px] lg:text-[20px] text-[#B1B1B1] uppercase text-center">
             Get the Early Access Pass to be the first to try Beta. We'll notify you when we launch!
           </p>
         </div>
@@ -102,7 +102,7 @@ const EarlyAccess = () => {
 
 const EmailSection = forwardRef(({}, ref) => {
   return (
-    <div className="flex flex-col items-center lg:flex-row gap-2 pointer-events-auto w-full" ref={ref}>
+    <div className="flex flex-col items-center lg:justify-center lg:flex-row gap-2 pointer-events-auto w-full" ref={ref}>
       <input
         className="w-full lg:w-[360px] h-[42px] pl-3 font-neu uppercase py-2 border text-xs lg:text-sm bg-bg border-white text-white placeholder:text-[#8A8B9B]"
         placeholder="Enter your email"

@@ -1,34 +1,23 @@
 /* eslint-disable react/no-unknown-property */
 import { useRef } from "react";
-import { OrbitControls, PerspectiveCamera, useHelper } from "@react-three/drei";
-import "./App.css";
-import { PointLightHelper } from "three";
-import { useFrame } from "@react-three/fiber";
-import { easeOutQuad } from "./utils";
-import * as THREE from "three";
-import { firstStateDur, secondStateDur } from "./constants";
-import { easing } from "maath";
+import { PerspectiveCamera } from "@react-three/drei";
+
 
 export function Environment() {
-  const spotLightRef = useRef();
   const pointLightRef = useRef();
-  const pointLightRef2 = useRef();
   // useHelper(pointLightRef, PointLightHelper);
   // useHelper(pointLightRef2, PointLightHelper);
   // useHelper(spotLightRef, SpotLightHelper);
   const camera = useRef();
 
-  useFrame((state, delta) => {
-    const timer = state.clock.elapsedTime * 1000;
-    const progressFade = easeOutQuad(Math.min(firstStateDur, timer) / firstStateDur);
-    const progressSpin = easeOutQuad(Math.min(secondStateDur, timer) / secondStateDur);
+  // useFrame((state, delta) => {
 
-    // pointLightRef.current.intensity = progressFade * progressFade * 2000;
-    // console.log(progressFade * progressFade);
-    state.events.update();
-    // easing.damp3(state.camera.position, [-state.pointer.x * 100, state.pointer.y + 200.5, 500], 0.3, delta) // Move camera
-    // state.camera.lookAt(0, 0, 0) // Look at center
-  });
+  //   // pointLightRef.current.intensity = progressFade * progressFade * 2000;
+  //   // console.log(progressFade * progressFade);
+  //   // state.events.update();
+  //   // easing.damp3(state.camera.position, [-state.pointer.x * 100, state.pointer.y + 200.5, 500], 0.3, delta) // Move camera
+  //   // state.camera.lookAt(0, 0, 0) // Look at center
+  // });
   const isMobile = window.innerWidth < 1000;
   const zCamera = isMobile ? 700 : 500;
 

@@ -5,7 +5,6 @@ import { EffectComposer } from "@react-three/postprocessing";
 import { AsciiEffectCustom } from "../../effects/asciiEffect";
 import { Environment } from "../../Environment";
 import { useGLTF, useTexture, PresentationControls } from "@react-three/drei";
-// import { editable as e } from "@theatre/r3f";
 import { easeOutQuad } from "../../utils";
 import { firstStateDur, secondStateDur } from "../../constants";
 import { useControls } from "leva";
@@ -13,66 +12,60 @@ import { useControls } from "leva";
 const SPRITE_SCALE = 20;
 const isMobile = window.innerWidth <= 1000;
 
-function Cube(props) {
-  const ref = useRef();
-  const viewport = useThree((state) => state.viewport);
-  useFrame((state, delta) => {
-    ref.current.rotation.x = ref.current.rotation.y += delta / 2;
-    // console.log(state);
-    // ref.current.material.uniforms.u_time.value = state.clock.elapsedTime;
-    // ref.current.material.uniforms.u_resolution.value = new THREE.Vector2(viewport.width, viewport.height);
-  });
+// function Cube(props) {
+//   const ref = useRef();
+//   const viewport = useThree((state) => state.viewport);
+//   useFrame((state, delta) => {
+//     ref.current.rotation.x = ref.current.rotation.y += delta / 2;
+//     // console.log(state);
+//     // ref.current.material.uniforms.u_time.value = state.clock.elapsedTime;
+//     // ref.current.material.uniforms.u_resolution.value = new THREE.Vector2(viewport.width, viewport.height);
+//   });
 
-  return (
-    <mesh
-      theatreKey="cube"
-      position={[0, 0, 0]}
-      // scale={5}
-      {...props}
-      ref={ref}
-      receiveShadow
-      castShadow
-    >
-      <boxGeometry args={[100, 100, 100, 1, 1, 1]} />
-      {/* <shaderMaterial
-          attach="material"
-          args={[DataStream]}
-          uniforms-u_resolution-value={new THREE.Vector2(viewport.width, viewport.height)}
-        /> */}
-      <meshPhongMaterial attach="material" color="#fff" flatShading />
-    </mesh>
-  );
-}
-function PlaneIkea(props) {
-  const ref = useRef();
-  const viewport = useThree((state) => state.viewport);
+//   return (
+//     <mesh
+//       theatreKey="cube"
+//       position={[0, 0, 0]}
+//       // scale={5}
+//       {...props}
+//       ref={ref}
+//       receiveShadow
+//       castShadow
+//     >
+//       <boxGeometry args={[100, 100, 100, 1, 1, 1]} />
+//       {/* <shaderMaterial
+//           attach="material"
+//           args={[DataStream]}
+//           uniforms-u_resolution-value={new THREE.Vector2(viewport.width, viewport.height)}
+//         /> */}
+//       <meshPhongMaterial attach="material" color="#fff" flatShading />
+//     </mesh>
+//   );
+// }
+// function PlaneIkea(props) {
+//   const ref = useRef();
+//   const viewport = useThree((state) => state.viewport);
 
-  useFrame((state, delta) => {
-    // ref.current.rotation.x = ref.current.rotation.y += delta / 2;
-    // console.log(ref.current.material.uniforms.time.value);
-    // ref.current.material.uniforms.u_time.value = state.clock.elapsedTime * 1;
-    // ref.current.material.uniforms.u_resolution.value = new THREE.Vector2(viewport.width, viewport.height);
-  });
+//   useFrame((state, delta) => {
+//     // ref.current.rotation.x = ref.current.rotation.y += delta / 2;
+//     // console.log(ref.current.material.uniforms.time.value);
+//     // ref.current.material.uniforms.u_time.value = state.clock.elapsedTime * 1;
+//     // ref.current.material.uniforms.u_resolution.value = new THREE.Vector2(viewport.width, viewport.height);
+//   });
 
-  return (
-    <mesh {...props} ref={ref}>
-      <planeGeometry args={[2, 2, 100, 100]} />
-      <meshBasicMaterial attach="material" color="#ff0" />
-    </mesh>
-  );
-}
+//   return (
+//     <mesh {...props} ref={ref}>
+//       <planeGeometry args={[2, 2, 100, 100]} />
+//       <meshBasicMaterial attach="material" color="#ff0" />
+//     </mesh>
+//   );
+// }
 
 const FadeSprite = forwardRef(function FadeSprite(props, ref) {
   const texture = useTexture("fadeSpriteLess.png");
 
   // const ref = useRef();
-  const viewport = useThree((state) => state.viewport);
-  useFrame((state, delta) => {
-    // ref.current.rotation.x = ref.current.rotation.y += delta / 2;
-    // console.log(ref.current.material.uniforms.time.value);
-    // ref.current.material.uniforms.u_time.value = state.clock.elapsedTime * 1;
-    // ref.current.material.uniforms.u_resolution.value = new THREE.Vector2(viewport.width, viewport.height);
-  });
+
   return (
     <sprite
       theatreKey="sprite"
@@ -263,5 +256,5 @@ function Scene() {
     </>
   );
 }
-
+useTexture.preload("fadeSpriteLess.png")
 export default Scene;

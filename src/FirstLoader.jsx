@@ -1,9 +1,7 @@
-import { Canvas } from "@react-three/fiber";
-import { Loader } from "./load1";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 
-const FirstLoader = () => {
+const FirstLoader = ({ setReady }) => {
   useGSAP(() => {
     function changeIt() {
       let newPercent = (this.progress() * 100).toFixed();
@@ -19,11 +17,11 @@ const FirstLoader = () => {
       duration: 2,
       onComplete: () => {
         gsap.to(".loader-wrapper", { opacity: 0, duration: 1, ease: "power1.inOut" });
+        setReady(true);
       },
     });
     tlh.play();
 
-    // gsap code here...
   });
   return (
     <>
