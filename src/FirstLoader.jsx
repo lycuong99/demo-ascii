@@ -16,8 +16,13 @@ const FirstLoader = ({ setReady }) => {
     tlh.to(".processing", {
       duration: 2,
       onComplete: () => {
-        gsap.to(".loader-wrapper", { opacity: 0, duration: 1, ease: "power1.inOut" });
+        gsap.to(".loader-wrapper", { opacity: 0, duration: 1, ease: "power1.inOut" 
+          , onComplete: () => {
+            gsap.set(".loader-wrapper", { display: "none",ease: "power1.inOut" });
+          }
+        });
         setReady(true);
+
       },
     });
     tlh.play();

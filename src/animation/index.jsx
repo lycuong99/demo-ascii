@@ -19,11 +19,7 @@ class Cell {
   }
 }
 
-export function createTextAnimation(intro, {
- interation = 45,
- lineGapTime = 200,
- charGapTime = 10,
-}={}) {
+export function createTextAnimation(intro, { interation = 45, lineGapTime = 200, charGapTime = 10 } = {}) {
   const results = Splitting({
     target: intro,
     by: "lines",
@@ -68,7 +64,6 @@ export function createTextAnimation(intro, {
 
   const animate = () => {
     // intro.classList.remove("opacity-0");
-    
 
     const loop = (line, cell, iteration = 0) => {
       const prev = cell.position === 0 ? 0 : cell.position - 1;
@@ -91,14 +86,14 @@ export function createTextAnimation(intro, {
 
       if (iteration < MAX_CELL_ITERATION) {
         setTimeout(() => {
-          loop(line, cell, iteration);
+          requestAnimationFrame(() => loop(line, cell, iteration));
         }, charGapTime);
       }
     };
     lines.forEach((line, i) => {
       line.cells.forEach((cell) => {
         setTimeout(() => {
-          loop(line, cell);
+          requestAnimationFrame(() => loop(line, cell));
         }, (i + 1) * lineGapTime);
       });
     });
