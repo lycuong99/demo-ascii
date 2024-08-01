@@ -14,21 +14,19 @@ const FirstLoader = ({ setReady }) => {
       onUpdate: changeIt,
     });
     tlh.to(".processing", {
-      duration: 2,
+      duration: 1,
       onComplete: () => {
         document.querySelector(".loading-text").textContent = "INITIALIZING ROADMAP...";
         gsap.to(".loader-wrapper", {
           opacity: 0,
           duration: 1,
-          delay: 1.2,
+          delay: 0.3,
           ease: "power1.inOut",
           onComplete: () => {
-           
             gsap.set(".loader-wrapper", { display: "none", ease: "power1.inOut" });
             setReady(true);
           },
         });
-       
       },
     });
     tlh.play();
