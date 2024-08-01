@@ -141,7 +141,7 @@ const EmailSection = forwardRef(({}, ref) => {
       <input
         onChange={(e) => setEmail(e.target.value)}
         value={email}
-        className="w-full lg:w-[360px] h-[42px] pl-3 font-neu uppercase py-2 border text-xs lg:text-sm bg-bg border-white text-white placeholder:text-[#8A8B9B]"
+        className="w-full lg:w-[360px] h-[42px] pl-3 font-neu py-2 border text-xs lg:text-sm bg-bg border-white text-white placeholder:uppercase placeholder:text-[#8A8B9B]"
         placeholder="Enter your email"
       />
       <button
