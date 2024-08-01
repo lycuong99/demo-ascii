@@ -11,7 +11,8 @@ export default {
       },
       colors: {
         bg: "#04051C",
-        blueBlack: "#010327"
+        blueBlack: "#010327",
+        background: "#04051C",
       },
     },
     container: {

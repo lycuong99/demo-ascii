@@ -1,10 +1,14 @@
+/* eslint-disable react/display-name */
 import { createTextAnimation } from "@/animation";
 import { ArrowLeftIcon } from "@/components/icon";
 import SimpleStar from "@/components/SimpleStar";
 import { H1 } from "@/components/typography";
 import { useGSAP } from "@gsap/react";
+import { useMutation, useQuery } from "convex/react";
 import gsap from "gsap";
-import { forwardRef, useLayoutEffect, useRef } from "react";
+import { forwardRef, useLayoutEffect, useRef, useState } from "react";
+import { api } from "../../../convex/_generated/api";
+import { toast } from "sonner";
 
 const EarlyAccess = () => {
   const introRef = useRef(null);
@@ -101,13 +105,49 @@ const EarlyAccess = () => {
 };
 
 const EmailSection = forwardRef(({}, ref) => {
+  const create = useMutation(api.emailCustomers.createEmailCustomer);
+  // const isExistEmail = useQuery(api.emailCustomers.createEmailCustomer);
+  const [email, setEmail] = useState("");
+
+  async function addEmail() {
+    if (!email) {
+      toast.error("Please enter your email");
+      return;
+    }
+
+    if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+      toast.error("Please enter a valid email");
+      return;
+    }
+
+    try {
+      const result = await create({ email });
+      if (result.error) {
+        toast.error(result.message);
+        return;
+      }
+
+      toast.success("Subscribed successfully");
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   return (
-    <div className="flex flex-col items-center lg:justify-center lg:flex-row gap-2 pointer-events-auto w-full" ref={ref}>
+    <div
+      className="flex flex-col items-center lg:justify-center lg:flex-row gap-2 pointer-events-auto w-full"
+      ref={ref}
+    >
       <input
+        onChange={(e) => setEmail(e.target.value)}
+        value={email}
         className="w-full lg:w-[360px] h-[42px] pl-3 font-neu uppercase py-2 border text-xs lg:text-sm bg-bg border-white text-white placeholder:text-[#8A8B9B]"
         placeholder="Enter your email"
       />
-      <button className="pointer-events-auto h-[42px] shadow-solid hover:bg-white hover:text-blueBlack w-[180px] px-3 font-bold bg-bg border border-white hover:border-blueBlack flex gap-2 items-center justify-center transition-colors">
+      <button
+        onClick={() => addEmail()}
+        className="pointer-events-auto h-[42px] shadow-solid hover:bg-white hover:text-blueBlack w-[180px] px-3 font-bold bg-bg border border-white hover:border-blueBlack flex gap-2 items-center justify-center transition-colors"
+      >
         <span className="transition-colors">GET NOTIFIED</span>
         <span>
           <ArrowLeftIcon />
