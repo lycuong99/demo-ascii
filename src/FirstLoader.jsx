@@ -16,17 +16,22 @@ const FirstLoader = ({ setReady }) => {
     tlh.to(".processing", {
       duration: 2,
       onComplete: () => {
-        gsap.to(".loader-wrapper", { opacity: 0, duration: 1, ease: "power1.inOut" 
-          , onComplete: () => {
-            gsap.set(".loader-wrapper", { display: "none",ease: "power1.inOut" });
-          }
+        document.querySelector(".loading-text").textContent = "INITIALIZING ROADMAP...";
+        gsap.to(".loader-wrapper", {
+          opacity: 0,
+          duration: 1,
+          delay: 1.2,
+          ease: "power1.inOut",
+          onComplete: () => {
+           
+            gsap.set(".loader-wrapper", { display: "none", ease: "power1.inOut" });
+            setReady(true);
+          },
         });
-        setReady(true);
-
+       
       },
     });
     tlh.play();
-
   });
   return (
     <>
@@ -36,12 +41,12 @@ const FirstLoader = ({ setReady }) => {
       <div className="fixed top-0  bg-[#010327] h-screen w-screen z-[100] loader-wrapper" style={{}}>
         {/* <Loader /> */}
         <div
-          className="h-full w-full flex justify-center items-center bg-[#0103271C]"
-          style={{ background: "linear-gradient(90deg, #15151D 25.85%, rgba(110, 110, 110, 0) 101.54%)" }}
+          className="h-full w-full flex justify-center items-center "
+          style={{ background: "linear-gradient(90deg, #040513, #010326 )" }}
         >
           <div className="font-neu text-center uppercase">
             <p className="mb-4 processing">50%</p>
-            <p className="tracking-[0.86ch]">on our road...</p>
+            <p className="tracking-[0.86ch] text-[14px] loading-text">on our road...</p>
           </div>
         </div>
       </div>
