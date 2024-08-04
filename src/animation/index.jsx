@@ -10,16 +10,17 @@ class Cell {
   }
 
   set(char) {
-    this.el.innerHTML = char;
+    this.el.textContent = char;
     this.char = char;
   }
 
   reset() {
-    this.el.innerHTML = this.value;
+    
+    this.el.textContent = this.value;
   }
 }
 
-export function createTextAnimation(intro, { interation = 45, lineGapTime = 200, charGapTime = 10 } = {}) {
+export function createTextAnimation(intro, { interation = 45, lineGapTime = 200, charGapTime = 16 } = {}) {
   const results = Splitting({
     target: intro,
     by: "lines",
@@ -52,11 +53,11 @@ export function createTextAnimation(intro, { interation = 45, lineGapTime = 200,
     };
   });
   const MAX_CELL_ITERATION = interation;
-
+  const SPACE = "\u00A0";
   const clear = () => {
     lines.forEach((line) => {
       line.cells.forEach((cell) => {
-        cell.set("&nbsp;");
+        cell.set(SPACE);
       });
     });
   };
@@ -80,20 +81,25 @@ export function createTextAnimation(intro, { interation = 45, lineGapTime = 200,
         cell.set(line.cells[prev].cache);
       }
 
-      if (cell.cache != "&nbsp;") {
+      if (cell.cache != SPACE) {
         ++iteration;
       }
 
       if (iteration < MAX_CELL_ITERATION) {
-        setTimeout(() => {
-          requestAnimationFrame(() => loop(line, cell, iteration));
-        }, charGapTime);
+        // setTimeout(() => {
+        //   loop(line, cell, iteration);
+        //   // requestAnimationFrame(() => );
+        // }, charGapTime);
+        requestAnimationFrame(() => {
+          loop(line, cell, iteration);
+        });
       }
     };
     lines.forEach((line, i) => {
       line.cells.forEach((cell) => {
         setTimeout(() => {
-          requestAnimationFrame(() => loop(line, cell));
+          loop(line, cell)
+          // requestAnimationFrame(() => );
         }, (i + 1) * lineGapTime);
       });
     });

@@ -37,7 +37,7 @@ const Nav = () => {
     <nav>
       <ul className="uppercase flex gap-4 lg:gap-8 font-neu ">
         <li>
-          <Link to="#" className=" h-full flex items-center text-white text-[12px] lg:text-[16px]  gap-1 leading-tight">
+          <Link to="https://docs.lockness.xyz/" target="_blank" className=" h-full flex items-center text-white text-[12px] lg:text-[16px]  gap-1 leading-tight">
             <span>DOCS</span>
             <span className="self-start hidden lg:inline-block">
               <img className="h-4 w-4" src="/mdi-light_arrow-left.svg" />
