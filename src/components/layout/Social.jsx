@@ -5,7 +5,7 @@ const socialList = [
     id: 1,
     icon: "/discord.svg",
     name: "Discord",
-    url: "#",
+    url: "https://discord.gg/locknessxyz",
   },
   {
     id: 2,
@@ -17,13 +17,13 @@ const socialList = [
     id: 4,
     icon: "/telegram.svg",
     name: "Telegram",
-    url: "#",
+    url: "https://t.me/locknessfoundation",
   },
   {
     id: 3,
     icon: "/email.svg",
     name: "Email",
-    url: "#",
+    url: "mailto:contact@lockness.xyz",
   },
 ];
 const Social = ({ className }) => {
