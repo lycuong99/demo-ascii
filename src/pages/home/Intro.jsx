@@ -224,14 +224,14 @@ const Intro = () => {
           <pre>
             <div className="text-linear-1 span-gradient">Building The </div>{" "}
             <span className="text-linear-2 span-gradient">Biggest Decentralized</span>{" "}
-            <div className="font-bold text-linear-1 span-gradient">Data Warehouse</div>
+            <div className="font-bold text-linear-1 span-gradient">Data Protocol</div>
           </pre>
         </H1>
         <H1 className="block lg:hidden mb-6 pointer-events-none">
           <pre>
             <div className="text-linear-1 span-gradient">Building The </div>
             <span className="text-linear-2 span-gradient">Biggest Decentralized</span>{" "}
-            <div className="font-bold text-linear-1 span-gradient">Data Warehouse</div>
+            <div className="font-bold text-linear-1 span-gradient">Data Protocol</div>
           </pre>
         </H1>
         <Subheader1 as="pre" ref={introRef} className="hidden lg:block anim text-[14px] lg:text-[20px] text-[#FECE00] uppercase ">
