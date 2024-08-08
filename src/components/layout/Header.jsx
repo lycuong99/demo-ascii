@@ -1,6 +1,9 @@
 import { Link } from "react-router-dom";
 import { LogoIcon } from "../icon";
 import { APP_PATH } from "../../router";
+import { cn } from "@/lib/util";
+import { useLayoutEffect, useRef } from "react";
+import { createTextAnimation } from "@/animation";
 
 export const Header = () => {
   return (
@@ -37,26 +40,63 @@ const Nav = () => {
     <nav>
       <ul className="uppercase flex gap-4 lg:gap-8 font-neu ">
         <li>
-          <Link to="https://docs.lockness.xyz/" target="_blank" className=" h-full flex items-center text-white text-[12px] lg:text-[16px]  gap-1 leading-tight">
-            <span>DOCS</span>
-            <span className="self-start hidden lg:inline-block">
+          <Link
+            to="https://docs.lockness.xyz/"
+            target="_blank"
+            className=" h-full flex items-center text-white text-[12px] lg:text-[16px]  gap-1 leading-tight"
+          >
+            <DancingText>DOCS</DancingText>
+            <span className="self-start hidden lg:inline-block ">
               <img className="h-4 w-4" src="/mdi-light_arrow-left.svg" />
             </span>
           </Link>
         </li>
 
         <li>
-          <Link to={APP_PATH.EARLY_ACCESS} className="flex justify-center items-center text-[12px] lg:text-[16px] text-white gap-2">
+          <Link
+            to={APP_PATH.EARLY_ACCESS}
+            className="flex justify-center items-center text-[12px] lg:text-[16px] text-white gap-2"
+          >
             <span className=" hidden lg:inline-block">
               <img src="/plus.svg" />
             </span>
-            <span> Get early access</span>
-            <span className=" hidden lg:inline-block"> 
+            <DancingText> Get early access</DancingText>
+            <span className=" hidden lg:inline-block">
               <img src="/plus.svg" />
             </span>
           </Link>
         </li>
       </ul>
     </nav>
+  );
+};
+
+const DancingText = ({ children, className }) => {
+  const ref = useRef();
+  useLayoutEffect(() => {
+    const intro = ref.current;
+    // intro.classList.add("opacity-0");
+
+    const { animate, clear, reset } = createTextAnimation(intro, {
+      interation: 20,
+      // lineGapTime: 200
+    });  
+
+    let timeout = setTimeout(() => {
+      animate();
+    }, 1000);
+    ref.current.addEventListener("mouseenter", animate);
+    // document.addEventListener("mouseenter", animate);
+    return () => {
+      clearTimeout(timeout);
+      ref.current.removeEventListener("mouseenter", animate);
+    
+      reset();
+    };
+  }, []);
+  return (
+    <span className={cn(className)}>
+      <pre ref={ref} className="tracking-wider">{children}</pre>
+    </span>
   );
 };
