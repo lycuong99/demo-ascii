@@ -1,1 +1,9 @@
-{ "rewrites": [{ "source": "/(.*)", "destination": "/" }] }
+{
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/" },
+    {
+      "source": "/dapp*",
+      "destination": "https://lockness-dapp.netlify.app/*"
+    }
+  ]
+}
