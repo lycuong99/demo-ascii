@@ -1,12 +1,12 @@
 {
   "rewrites": [
-    { "source": "/", "destination": "/" },
-
-    {"source": "/:match*", "destination": "/:match*"},
     {
       "source": "/dapp/",
       "destination": "https://lockness-dapp.netlify.app/"
     },
-    {"source": "/dapp/:match*", "destination": "https://lockness-dapp.netlify.app/:match*"}
+    { "source": "/dapp/:match*", "destination": "https://lockness-dapp.netlify.app/:match*" },
+    { "source": "/", "destination": "/" },
+
+    { "source": "/:match*", "destination": "/:match*" }
   ]
 }
