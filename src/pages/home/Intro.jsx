@@ -222,26 +222,26 @@ const Intro = () => {
       <div className="container font-neu flex flex-col items-start justify-center">
         <H1 ref={h1Ref} className="hidden lg:block mb-6 pointer-events-none">
           <pre>
-            <div className="text-linear-1 span-gradient">Building The </div>{" "}
-            <span className="text-linear-2 span-gradient">Biggest Decentralized</span>{" "}
-            <div className="font-bold text-linear-1 span-gradient">Data Protocol</div>
+            <div className="text-linear-1 span-gradient">The First  </div>{" "}
+            <span className="text-linear-2 span-gradient">Decentralized</span>{" "}
+            <div className="font-bold text-linear-1 span-gradient">Data Annotation Platform</div>
           </pre>
         </H1>
         <H1 className="block lg:hidden mb-6 pointer-events-none">
           <pre>
-            <div className="text-linear-1 span-gradient">Building The </div>
-            <span className="text-linear-2 span-gradient">Biggest Decentralized</span>{" "}
-            <div className="font-bold text-linear-1 span-gradient">Data Protocol</div>
+            <div className="text-linear-1 span-gradient">The First  </div>
+            <span className="text-linear-2 span-gradient">Decentralized</span>{" "}
+            <div className="font-bold text-linear-1 span-gradient">Data Annotation Platform</div>
           </pre>
         </H1>
         <Subheader1 as="pre" ref={introRef} className="hidden lg:block anim text-[14px] lg:text-[20px] text-[#FECE00] uppercase ">
-          <span className="block">Join the movement towards a decentralized future </span>
-          <span className="block">where your data is securely stored, easily accessible, </span>
-          <span className="block">and entirely under your control.</span>
+          <span className="block">Join the transition to a decentralized future </span>
+          <span className="block">and earn rewards by enhancing artificial intelligence. </span>
+          {/* <span className="block">and entirely under your control.</span> */}
         </Subheader1>
         <Subheader1 className="block lg:hidden text-[14px] lg:text-[20px] max-w-[40ch]  text-[#FECE00] uppercase text-balance ">
-          Join the movement towards a decentralized future where your data is securely stored, easily accessible, and
-          entirely under your control.
+          Join the transition to a decentralized future and earn rewards by enhancing artificial intelligence.
+
         </Subheader1>
       </div>
       <Button
