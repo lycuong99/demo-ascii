@@ -7,6 +7,6 @@
     { "source": "/dapp/:match*", "destination": "https://lockness-dapp.netlify.app/:match*" },
     { "source": "/", "destination": "/" },
 
-    { "source": "/:match*", "destination": "/:match*" }
+    { "source": "/:match*", "destination": "/" }
   ]
 }
