@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { LogoIcon } from "../icon";
 import { APP_PATH } from "../../router";
-import { cn } from "@/lib/util";
+import { cn } from "@/lib/utils";
 import { useLayoutEffect, useRef } from "react";
 import { createTextAnimation } from "@/animation";
 
@@ -66,6 +66,20 @@ const Nav = () => {
             </span>
           </Link>
         </li>
+        <li>
+          <Link
+            to={APP_PATH.DATASETS}
+            className="flex justify-center items-center text-[12px] lg:text-[16px] text-white gap-2"
+          >
+            <span className=" hidden lg:inline-block">
+              <img src="/plus.svg" />
+            </span>
+            <DancingText> Datasets</DancingText>
+            <span className=" hidden lg:inline-block">
+              <img src="/plus.svg" />
+            </span>
+          </Link>
+        </li>
       </ul>
     </nav>
   );
@@ -80,7 +94,7 @@ const DancingText = ({ children, className }) => {
     const { animate, clear, reset } = createTextAnimation(intro, {
       interation: 20,
       // lineGapTime: 200
-    });  
+    });
 
     let timeout = setTimeout(() => {
       animate();
@@ -90,13 +104,15 @@ const DancingText = ({ children, className }) => {
     return () => {
       clearTimeout(timeout);
       ref.current.removeEventListener("mouseenter", animate);
-    
+
       reset();
     };
   }, []);
   return (
     <span className={cn(className)}>
-      <pre ref={ref} className="tracking-wider">{children}</pre>
+      <pre ref={ref} className="tracking-wider">
+        {children}
+      </pre>
     </span>
   );
 };
